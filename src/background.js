@@ -3,7 +3,7 @@ function Background(context, canvasWidth, canvasHeight, jogador) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.movSpeed = 0;
-
+tetstete
     this.images = [
         '../img/background/1.png',
         '../img/background/2.png',
