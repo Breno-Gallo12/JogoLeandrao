@@ -128,5 +128,4 @@ Background.prototype = {
             });
         }
     }
-    a
 };

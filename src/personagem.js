@@ -7,7 +7,7 @@ function Jogador(context, teclado, animacao) {
     this.animacao = animacao;
     this.vida = 100;
     this.x = 0;
-    this.y = 300;
+    this.y = 0;
     this.width = 500;  // Atualizado para 500
     this.height = 500; // Atualizado para 500
     this.direcao = DIRECAO_DIREITA;
@@ -28,7 +28,7 @@ function Jogador(context, teclado, animacao) {
 
     this.spriteCorrendo = new Image();
     this.spriteCorrendo.src = '../img/Sprites/Run.png';
-    this.numSpritesCorrendo = 6;
+    this.numSpritesCorrendo = 8;
     this.largSpriteCorrendo = this.spriteCorrendo.width / this.numSpritesCorrendo;
     this.altSpriteCorrendo = this.spriteCorrendo.height;
     this.frameCorrendo = 0;
