@@ -75,7 +75,7 @@ Background.prototype = {
         var maxGeral = 3
 
 
-        if (jogador.isMoving) {
+        if (jogador.movingBack) {
             this.fundo.forEach(object => {
                 if (object === this.solLayer) {
                     if (object.speedModifier < maxSol) { 
