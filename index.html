@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Meu Jogo</title>
 </head>
 
 <body>
-    <canvas id="meuCanvas" width="800" height="500"></canvas>
+    <div class="container">
+        <h1>Meu Jogo</h1>
+        <canvas id="meuCanvas" width="800" height="500"></canvas>
+    </div>
 
     <script src="./src/background.js"></script>
     <script src="./src/personagem.js"></script>
@@ -21,14 +25,14 @@
         var context = canvas.getContext('2d');
 
         // Cria uma instância de Background e desenha o background
-        var teclado = new Teclado(document)
-        var background = new Background(context, canvas.width, canvas.height,jogador)
-
-        // Cria uma instância de Jogador e desenha o jogador
-        var jogador = new Jogador(context,teclado,animacao);
+        var teclado = new Teclado(document);
+        var jogador = new Jogador(context, teclado, animacao);
         jogador.x = 0;
         jogador.y = -30;
-        var animacao = new Animacao(context, background,jogador)
+        var background = new Background(context, canvas.width, canvas.height, jogador);
+        
+        // Cria uma instância de Jogador e desenha o jogador
+        var animacao = new Animacao(context, background, jogador);
         animacao.novoSprite(jogador);
         animacao.ligar();
     </script>
