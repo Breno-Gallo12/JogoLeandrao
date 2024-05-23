@@ -1,3 +1,29 @@
-body{
-    background: white;
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: url('img/background/bgprincipal.jpg') no-repeat center center fixed;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#meuCanvas {
+    border: 5px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #000;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
