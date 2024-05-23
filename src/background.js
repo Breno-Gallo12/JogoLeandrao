@@ -3,6 +3,7 @@ function Background(context, canvasWidth, canvasHeight, jogador) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.movSpeed = 0;
+
     this.images = [
         '../img/background/1.png',
         '../img/background/2.png',
@@ -54,7 +55,7 @@ class Layer {
         this.x2 -= this.speedModifier;
 
         if (this.x < -this.canvasWidth) {
-            this.x = this.canvasWidth - this.speedModifier + this.x2 ;
+            this.x = this.canvasWidth - this.speedModifier + this.x2;
         }
 
         if (this.x2 < -this.canvasWidth) {

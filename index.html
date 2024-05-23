@@ -29,9 +29,8 @@
         var background = new Background(context, canvas.width, canvas.height,jogador)
 
         // Cria uma instância de Jogador e desenha o jogador
-        var jogador = new Jogador(context,teclado,animacao);
-        jogador.x = 0;
-        jogador.y = -30;
+        var jogador = new Jogador(context,teclado,animacao,canvas.width,canvas.height);
+        
         var animacao = new Animacao(context, background,jogador)
         animacao.novoSprite(jogador);
         animacao.ligar();
