@@ -54,12 +54,12 @@ Jogador.prototype = {
     // Movimento horizontal, ESQUERDA E DIREITA
     if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
       this.direcao = DIRECAO_ESQUERDA;
-      this.x -= 3;
+      this.x -= 5;
       this.isMoving = true;
       this.movingBack = false;
     } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 582) {
       this.direcao = DIRECAO_DIREITA;
-      this.x += 3;
+      this.x += 6;
       this.isMoving = true;
       this.movingBack = true;
     } else {
