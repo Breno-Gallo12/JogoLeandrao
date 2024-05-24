@@ -6,7 +6,7 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.teclado = teclado;
   this.animacao = animacao;
   this.vida = 100;
-  this.x = 0; // Posição inicial X ajustada
+  this.x = 0;
   this.y = 0;
   this.width = 400;
   this.height = 400;
@@ -18,9 +18,17 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.corVida = "green";
   this.isMoving = false;
   this.movingBack = false;
+  this.atacando1 = false;
+  this.atacando2 = false;
+  this.tempoAtaque1 = 45;
+  this.tempoAtaque2 = 40;
+  this.cooldownAtaque1 = 0;
+  this.cooldownAtaque2 = 0;
+  this.tempoRestanteAtaque1 = 0;
+  this.tempoRestanteAtaque2 = 0;
 
   // Constantes do chão com deslocamento vertical
-  this.verticalOffset = -120 ; // Deslocamento para subir o jogador acima do chão
+  this.verticalOffset = -120; // Deslocamento para subir o jogador acima do chão
   this.groundHeight = canvasHeight - this.height - this.verticalOffset;
 
   // Código para carregar e configurar sprites
@@ -47,24 +55,75 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.altSpritePulando = this.spritePulando.height;
   this.framePulando = 0;
   this.contadorPulando = 0;
+
+  this.spriteAtaque1 = new Image();
+  this.spriteAtaque1.src = "../img/Sprites/Attack1.png";
+  this.numSpritesAtaque1 = 4;
+  this.largSpriteAtaque1 = this.spriteAtaque1.width / this.numSpritesAtaque1;
+  this.altSpriteAtaque1 = this.spriteAtaque1.height;
+  this.frameAtaque1 = 0;
+  this.contadorAtaque1 = 0;
+
+  this.spriteAtaque2 = new Image();
+  this.spriteAtaque2.src = "../img/Sprites/Attack2.png";
+  this.numSpritesAtaque2 = 4;
+  this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
+  this.altSpriteAtaque2 = this.spriteAtaque2.height;
+  this.frameAtaque2 = 0;
+  this.contadorAtaque2 = 0;
 }
 
 Jogador.prototype = {
   atualizar: function () {
     // Movimento horizontal, ESQUERDA E DIREITA
-    if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
+    if (
+      this.teclado.pressionada(SETA_ESQUERDA) &&
+      this.teclado.pressionada(SETA_DIREITA)
+    ) {
+      this.x += 0;
+      this.isMoving = false;
+      this.movingBack = false;
+    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
       this.direcao = DIRECAO_ESQUERDA;
-      this.x -= 3;
+      this.x -= 5;
       this.isMoving = true;
       this.movingBack = false;
     } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 582) {
       this.direcao = DIRECAO_DIREITA;
-      this.x += 3;
+      this.x += 5;
       this.isMoving = true;
       this.movingBack = true;
     } else {
       this.isMoving = false;
       this.movingBack = false;
+    }
+
+    // Gerenciar ataques com cooldown
+    if (this.teclado.pressionada(Q) && this.cooldownAtaque1 === 0) {
+      this.atacando1 = true;
+      this.tempoRestanteAtaque1 = this.tempoAtaque1;
+      this.cooldownAtaque1 = 5000;
+    } else if (this.teclado.pressionada(W) && this.cooldownAtaque2 === 0) {
+      this.atacando2 = true;
+      this.tempoRestanteAtaque2 = this.tempoAtaque2;
+      this.cooldownAtaque2 = 7000;
+    }
+
+    // Atualizar cooldowns
+    if (this.cooldownAtaque1 > 0)
+      this.cooldownAtaque1 = this.cooldownAtaque1 - 5;
+    if (this.cooldownAtaque2 > 0)
+      this.cooldownAtaque2 = this.cooldownAtaque2 - 5;
+
+    // Diminuir tempo restante dos ataques
+    if (this.tempoRestanteAtaque1 > 0) {
+      this.tempoRestanteAtaque1--;
+      if (this.tempoRestanteAtaque1 === 0) this.atacando1 = false;
+    }
+
+    if (this.tempoRestanteAtaque2 > 0) {
+      this.tempoRestanteAtaque2--;
+      if (this.tempoRestanteAtaque2 === 0) this.atacando2 = false;
     }
 
     // Pulo
@@ -88,6 +147,9 @@ Jogador.prototype = {
     if (this.vida <= 0) {
       this.morrer();
     }
+
+    console.log(this.cooldownAtaque1);
+    console.log(this.cooldownAtaque2);
   },
 
   morrer: function () {
@@ -100,7 +162,21 @@ Jogador.prototype = {
   desenhar: function () {
     let sprite, numSprites, largSprite, altSprite, frame, contador;
 
-    if (this.pulando) {
+    if (this.atacando1) {
+      sprite = this.spriteAtaque1;
+      numSprites = this.numSpritesAtaque1;
+      largSprite = this.largSpriteAtaque1;
+      altSprite = this.altSpriteAtaque1;
+      frame = this.frameAtaque1;
+      contador = this.contadorAtaque1;
+    } else if (this.atacando2) {
+      sprite = this.spriteAtaque2;
+      numSprites = this.numSpritesAtaque2;
+      largSprite = this.largSpriteAtaque2;
+      altSprite = this.altSpriteAtaque2;
+      frame = this.frameAtaque2;
+      contador = this.contadorAtaque2;
+    } else if (this.pulando) {
       sprite = this.spritePulando;
       numSprites = this.numSpritesPulando;
       largSprite = this.largSpritePulando;
@@ -163,6 +239,12 @@ Jogador.prototype = {
     if (this.pulando) {
       this.framePulando = frame;
       this.contadorPulando = contador;
+    } else if (this.atacando1) {
+      this.frameAtaque1 = frame;
+      this.contadorAtaque1 = contador;
+    } else if (this.atacando2) {
+      this.frameAtaque2 = frame;
+      this.contadorAtaque2 = contador;
     } else if (this.isMoving) {
       this.frameCorrendo = frame;
       this.contadorCorrendo = contador;
@@ -178,14 +260,20 @@ Jogador.prototype = {
     var barraVidaY = this.context.canvas.height - 20;
     var barraVidaWidth = 30;
     var barraVidaHeight = 10;
+    var cooldownBarWidth = 100;
+    var cooldownBarHeight = 10;
+    var cooldownBarX1 = 50;
+    var cooldownBarY1 = 480;
+    var cooldownBarX2 = 160;
+    var cooldownBarY2 = 480;
 
     // Definir a cor da barra de vida com base na vida restante
     if (this.vida > 60) {
-      this.context.fillStyle = "green";
+      this.corVida = "green";
     } else if (this.vida > 30) {
-      this.context.fillStyle = "yellow";
+      this.corVida = "yellow";
     } else {
-      this.context.fillStyle = "red";
+      this.corVida = "red";
     }
 
     this.context.fillStyle = this.corVida;
@@ -197,5 +285,43 @@ Jogador.prototype = {
       barraVidaWidth,
       barraVidaHeight
     );
+
+    // Barra de cooldown para o ataque 1
+    this.context.fillStyle = "grey";
+    this.context.fillRect(
+      cooldownBarX1,
+      cooldownBarY1,
+      cooldownBarWidth,
+      cooldownBarHeight
+    );
+    if (this.cooldownAtaque1 > 0) {
+      const cooldownWidth1 = (this.cooldownAtaque1 / 5000) * cooldownBarWidth;
+      this.context.fillStyle = "blue";
+      this.context.fillRect(
+        cooldownBarX1,
+        cooldownBarY1,
+        cooldownWidth1,
+        cooldownBarHeight
+      );
+    }
+
+    // Barra de cooldown para o ataque 2
+    this.context.fillStyle = "grey";
+    this.context.fillRect(
+      cooldownBarX2,
+      cooldownBarY2,
+      cooldownBarWidth,
+      cooldownBarHeight
+    );
+    if (this.cooldownAtaque2 > 0) {
+      const cooldownWidth2 = (this.cooldownAtaque2 / 7000) * cooldownBarWidth;
+      this.context.fillStyle = "blue";
+      this.context.fillRect(
+        cooldownBarX2,
+        cooldownBarY2,
+        cooldownWidth2,
+        cooldownBarHeight
+      );
+    }
   },
 };

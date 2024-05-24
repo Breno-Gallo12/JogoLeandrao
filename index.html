@@ -24,15 +24,23 @@
         var canvas = document.getElementById('meuCanvas');
         var context = canvas.getContext('2d');
 
-        // Cria uma instância de Background e desenha o background
-        var teclado = new Teclado(document)
-        var background = new Background(context, canvas.width, canvas.height,jogador)
+        // Inicializa o teclado
+        var teclado = new Teclado(document);
 
-        // Cria uma instância de Jogador e desenha o jogador
-        var jogador = new Jogador(context,teclado,animacao,canvas.width,canvas.height);
-        
-        var animacao = new Animacao(context, background,jogador)
+        // Cria uma instância de Jogador
+        var jogador = new Jogador(context, teclado, null, canvas.width, canvas.height);
+        jogador.vida = 100;
+
+        // Cria uma instância de Background e desenha o background
+        var background = new Background(context, canvas.width, canvas.height, jogador);
+
+        // Cria uma instância de Animacao
+        var animacao = new Animacao(context, background);
+
+        // Adiciona o jogador à animação
         animacao.novoSprite(jogador);
+
+        // Liga a animação
         animacao.ligar();
     </script>
 </body>
