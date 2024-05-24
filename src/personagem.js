@@ -23,12 +23,13 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.morto = false;
   this.Dano = false;
   this.animandoMorte = false;
-  this.tempoAtaque1 = 45;
+  this.tempoAtaque1 = 30;
   this.tempoAtaque2 = 40;
   this.cooldownAtaque1 = 0;
   this.cooldownAtaque2 = 0;
   this.tempoRestanteAtaque1 = 0;
   this.tempoRestanteAtaque2 = 0;
+  this.dano = 0;
 
   // Constantes do chão com deslocamento vertical
   this.verticalOffset = -120; // Deslocamento para subir o jogador acima do chão
@@ -118,14 +119,21 @@ Jogador.prototype = {
     }
 
     // Gerenciar ataques com cooldown
-    if (this.teclado.pressionada(Q) && this.cooldownAtaque1 === 0) {
+      if(this.teclado.pressionada(Q) && this.teclado.pressionada(W)){
+      this.atacando1 = false
+      this.atacando2 = false 
+    }
+    else if (this.teclado.pressionada(Q) && this.cooldownAtaque1 === 0) {
       this.atacando1 = true;
       this.tempoRestanteAtaque1 = this.tempoAtaque1;
-      this.cooldownAtaque1 = 5000;
+      this.cooldownAtaque1 = 350;
+      this.dano = 20;
+
     } else if (this.teclado.pressionada(W) && this.cooldownAtaque2 === 0) {
       this.atacando2 = true;
       this.tempoRestanteAtaque2 = this.tempoAtaque2;
-      this.cooldownAtaque2 = 7000;
+      this.cooldownAtaque2 = 3000;
+      this.dano = 40;
     }
 
     // Atualizar cooldowns
@@ -177,14 +185,14 @@ Jogador.prototype = {
       return;
     }
 
-    var mostra = this.cooldownAtaque1 / 1000;
-    var mostr2 = this.cooldownAtaque2 / 1000;
+    // var mostra = this.cooldownAtaque1 / 1000;
+    // var mostr2 = this.cooldownAtaque2 / 1000;
 
-    console.log(mostra);
-    console.log(mostr2);
+    // console.log(mostra);
+    // console.log(mostr2);
   },
 
-  tomaDano: function () {
+  tomaDano: function (habilidade) {
     this.Dano = true;
   },
 
@@ -353,7 +361,7 @@ Jogador.prototype = {
       cooldownBarHeight
     );
     if (this.cooldownAtaque1 > 0) {
-      const cooldownWidth1 = (this.cooldownAtaque1 / 5000) * cooldownBarWidth;
+      const cooldownWidth1 = (this.cooldownAtaque1 / 350) * cooldownBarWidth;
       this.context.fillStyle = "blue";
       this.context.fillRect(
         cooldownBarX1,
@@ -372,7 +380,7 @@ Jogador.prototype = {
       cooldownBarHeight
     );
     if (this.cooldownAtaque2 > 0) {
-      const cooldownWidth2 = (this.cooldownAtaque2 / 7000) * cooldownBarWidth;
+      const cooldownWidth2 = (this.cooldownAtaque2 / 3000) * cooldownBarWidth;
       this.context.fillStyle = "blue";
       this.context.fillRect(
         cooldownBarX2,
