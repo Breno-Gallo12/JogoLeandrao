@@ -20,6 +20,9 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.movingBack = false;
   this.atacando1 = false;
   this.atacando2 = false;
+  this.morto = false;
+  this.Dano = false;
+  this.animandoMorte = false;
   this.tempoAtaque1 = 45;
   this.tempoAtaque2 = 40;
   this.cooldownAtaque1 = 0;
@@ -71,6 +74,22 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
   this.frameAtaque2 = 0;
   this.contadorAtaque2 = 0;
+
+  this.spriteMorre = new Image();
+  this.spriteMorre.src = "../img/Sprites/Death.png";
+  this.numSpritesMorre = 7;
+  this.largSpriteMorre = this.spriteMorre.width / this.numSpritesMorre;
+  this.altSpriteMorre = this.spriteMorre.height;
+  this.frameMorre = 0;
+  this.contadorMorre = 0;
+
+  this.spriteDano = new Image();
+  this.spriteDano.src = "../img/Sprites/Take hit.png";
+  this.numSpritesDano = 3;
+  this.largSpriteDano = this.spriteDano.width / this.numSpritesDano;
+  this.altSpriteDano = this.spriteDano.height;
+  this.frameDano = 0;
+  this.contadorDano = 0;
 }
 
 Jogador.prototype = {
@@ -144,19 +163,35 @@ Jogador.prototype = {
     }
 
     // Checar vida
-    if (this.vida <= 0) {
-      this.morrer();
+    if (this.vida <= 0 && !this.morto) {
+      this.morto = true;
+      this.animandoMorte = true;
+      this.frameMorre = 0;
+      this.contadorMorre = 0;
     }
 
-    var mostra = this.cooldownAtaque1 / 1000
-    var mostr2 = this.cooldownAtaque2 / 1000
+    if (this.animandoMorte) {
+      if (this.frameMorre === this.numSpritesMorre - 1) {
+        this.morrer();
+      }
+      return;
+    }
+
+    var mostra = this.cooldownAtaque1 / 1000;
+    var mostr2 = this.cooldownAtaque2 / 1000;
 
     console.log(mostra);
     console.log(mostr2);
   },
 
+  tomaDano: function () {
+    this.Dano = true;
+  },
+
   morrer: function () {
     console.log("Game Over");
+    this.morto = false;
+    this.animandoMorte = false;
     this.vida = 100;
     this.x = 0;
     this.y = this.groundHeight;
@@ -179,6 +214,13 @@ Jogador.prototype = {
       altSprite = this.altSpriteAtaque2;
       frame = this.frameAtaque2;
       contador = this.contadorAtaque2;
+    } else if (this.Dano) {
+      sprite = this.spriteDano;
+      numSprites = this.numSpritesDano;
+      largSprite = this.largSpriteDano;
+      altSprite = this.altSpriteDano;
+      frame = this.frameDano;
+      contador = this.contadorDano;
     } else if (this.pulando) {
       sprite = this.spritePulando;
       numSprites = this.numSpritesPulando;
@@ -186,6 +228,13 @@ Jogador.prototype = {
       altSprite = this.altSpritePulando;
       frame = this.framePulando;
       contador = this.contadorPulando;
+    } else if (this.animandoMorte) {
+      sprite = this.spriteMorre;
+      numSprites = this.numSpritesMorre;
+      largSprite = this.largSpriteMorre;
+      altSprite = this.altSpriteMorre;
+      frame = this.frameMorre;
+      contador = this.contadorMorre;
     } else if (this.isMoving) {
       sprite = this.spriteCorrendo;
       numSprites = this.numSpritesCorrendo;
@@ -251,6 +300,12 @@ Jogador.prototype = {
     } else if (this.isMoving) {
       this.frameCorrendo = frame;
       this.contadorCorrendo = contador;
+    } else if (this.Dano) {
+      this.frameDano = frame;
+      this.contadorDano = contador;
+    } else if (this.animandoMorte) {
+      this.frameMorre = frame;
+      this.contadorMorre = contador;
     } else {
       this.frameIdle = frame;
       this.contadorIdle = contador;
@@ -267,7 +322,7 @@ Jogador.prototype = {
     var cooldownBarHeight = 10;
     var cooldownBarX1 = 50;
     var cooldownBarY1 = 480;
-    var cooldownBarX2 = 160;
+    var cooldownBarX2 = 155;
     var cooldownBarY2 = 480;
 
     // Definir a cor da barra de vida com base na vida restante
