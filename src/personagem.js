@@ -86,13 +86,11 @@ Jogador.prototype = {
     } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
       this.direcao = DIRECAO_ESQUERDA;
       this.x -= 5;
-      this.x -= 5;
       this.isMoving = true;
       this.movingBack = false;
     } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 582) {
       this.direcao = DIRECAO_DIREITA;
       this.x += 5;
-      this.x += 6;
       this.isMoving = true;
       this.movingBack = true;
     } else {
@@ -150,8 +148,11 @@ Jogador.prototype = {
       this.morrer();
     }
 
-    console.log(this.cooldownAtaque1);
-    console.log(this.cooldownAtaque2);
+    var mostra = this.cooldownAtaque1 / 1000
+    var mostr2 = this.cooldownAtaque2 / 1000
+
+    console.log(mostra);
+    console.log(mostr2);
   },
 
   morrer: function () {
