@@ -1,4 +1,4 @@
-function Animacao(context,background) {
+function Animacao(context,background,sons) {
     this.context = context;
     this.sprites = [];
     this.ligado = false;
@@ -10,9 +10,18 @@ Animacao.prototype.novoSprite = function (sprite) {
 };
 
 Animacao.prototype.ligar = function () {
+    var animacao = this;
+
+    if (!jogador.carregado) {
+        setTimeout(function () {
+            animacao.ligar();
+        }, 100);
+        return;
+    }
     this.ligado = true;
     this.proximoFrame();
 };
+
 
 Animacao.prototype.desligar = function () {
     this.ligado = false;
@@ -24,6 +33,7 @@ Animacao.prototype.proximoFrame = function () {
     this.limparTela();
     
     this.background.desenhaBackground();
+
 
     for (var i = 0; i < this.sprites.length; i++) {
         this.sprites[i].atualizar();
