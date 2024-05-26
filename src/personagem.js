@@ -1,10 +1,12 @@
 var DIRECAO_ESQUERDA = 1;
 var DIRECAO_DIREITA = 2;
 
-function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
+
+function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight) {
   this.context = context;
   this.teclado = teclado;
   this.animacao = animacao;
+  this.sons = sons;
   this.vida = 100;
   this.x = 0;
   this.y = 0;
@@ -30,7 +32,7 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.tempoRestanteAtaque1 = 0;
   this.tempoRestanteAtaque2 = 0;
   this.dano = 0;
-  
+
 
   // Constantes do chão com deslocamento vertical
   this.verticalOffset = -120; // Deslocamento para subir o jogador acima do chão
@@ -92,43 +94,67 @@ function Jogador(context, teclado, animacao, canvasWidth, canvasHeight) {
   this.altSpriteDano = this.spriteDano.height;
   this.frameDano = 0;
   this.contadorDano = 0;
+
+  this.spriteParado.onload = () => this.verificarSpritesCarregadas();
+  this.spriteCorrendo.onload = () => this.verificarSpritesCarregadas(); 
+  this.spritePulando.onload = () => this.verificarSpritesCarregadas(); 
+  this.spriteAtaque1.onload = () => this.verificarSpritesCarregadas(); 
+  this.spriteAtaque2.onload = () => this.verificarSpritesCarregadas(); 
+  this.spriteMorre.onload = () => this.verificarSpritesCarregadas(); 
+  this.spriteDano.onload = () => this.verificarSpritesCarregadas(); 
+
+
+  this.spritesCarregadas = 0;
+  this.totalSprites = 7
+  this.carregado = false
+
 }
 
 Jogador.prototype = {
 
+  verificarSpritesCarregadas: function () {
+    this.spritesCarregadas++;
+    if (this.spritesCarregadas === this.totalSprites) {
+        this.carregado = true;
+    }
+    else{
+      this.carregado = false
+    }
+  },
+
   // Funções de movimentação
 
-  moverEsquerda: function(){
+  moverEsquerda: function () {
     this.direcao = DIRECAO_ESQUERDA;
     this.x -= 5;
     this.isMoving = true;
     this.movingBack = false;
   },
 
-  moverDireita: function(){
+  moverDireita: function () {
     this.direcao = DIRECAO_DIREITA;
     this.x += 5;
     this.isMoving = true;
     this.movingBack = true;
   },
 
-  bugDireitaEsquerda: function(){
+  bugDireitaEsquerda: function () {
     this.x += 0;
     this.isMoving = false;
     this.movingBack = false;
   },
 
-  pular : function(){
+  pular: function () {
     this.velocidadeY = -12;
     this.pulando = true;
   },
 
-  gravidade: function(){
+  gravidade: function () {
     this.y += this.velocidadeY;
     this.velocidadeY += 0.5;
   },
 
-  pararPulo: function(){
+  pararPulo: function () {
     this.y = this.groundHeight;
     this.velocidadeY = 0;
     this.pulando = false;
@@ -141,33 +167,38 @@ Jogador.prototype = {
 
     } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
       this.moverEsquerda();
+      this.sons.reproduzirCorrer();
 
     } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 582) {
       this.moverDireita();
+      this.sons.reproduzirCorrer();
 
     } else {
       this.isMoving = false;
       this.movingBack = false;
+      this.sons.pausarCorrer();
     }
 
     // Gerenciar ataques e cooldown
-    if((this.teclado.pressionada(SETA_CIMA) || this.pulando) && (this.teclado.pressionada(Q) || this.teclado.pressionada(W))){
+    if ((this.teclado.pressionada(SETA_CIMA) || this.pulando) && (this.teclado.pressionada(Q) || this.teclado.pressionada(W))) {
       this.pulando = true;
       this.atacando1 = false;
       this.atacando2 = false;
     }
-    else if(this.teclado.pressionada(Q) && this.teclado.pressionada(W)){
+    else if (this.teclado.pressionada(Q) && this.teclado.pressionada(W)) {
       this.atacando1 = false
-      this.atacando2 = false 
+      this.atacando2 = false
     }
     else if (this.teclado.pressionada(Q) && this.cooldownAtaque1 === 0) {
       this.iniciarAtaque1();
+      this.sons.reproduzirAtaque1();
 
     } else if (this.teclado.pressionada(W) && this.cooldownAtaque2 === 0) {
       this.iniciarAtaque2();
+      this.sons.reproduzirAtaque2();
 
-    } else if (((this.teclado.pressionada(Q) && this.cooldownAtaque1 === 0) || this.teclado.pressionada(W) && this.cooldownAtaque2 === 0) && (this.teclado.pressionada(SETA_DIREITA) || this.teclado.pressionada(SETA_ESQUERDA))){
-      this.isMoving  = true;
+    }if (((this.teclado.pressionada(Q) && this.cooldownAtaque1 === 0) || this.teclado.pressionada(W) && this.cooldownAtaque2 === 0) && (this.teclado.pressionada(SETA_DIREITA) || this.teclado.pressionada(SETA_ESQUERDA))) {
+      this.isMoving = true;
       this.iniciarAtaque1();
       this.iniciarAtaque2();
     }
@@ -177,6 +208,7 @@ Jogador.prototype = {
 
     // Pulo
     if (this.teclado.pressionada(SETA_CIMA) && !this.pulando) {
+      this.sons.reproduzirPulo();
       this.pular();
     }
 
@@ -195,36 +227,36 @@ Jogador.prototype = {
 
     if (this.animandoMorte) {
       if (this.frameMorre === this.numSpritesMorre - 1) {
-        this.morrer();
+        this.renascer();
       }
       return;
     }
   },
 
   //Funções de ataques
-  iniciarAtaque1: function() {
-    if(!this.atacando2){
-    this.atacando1 = true;
-    this.tempoRestanteAtaque1 = this.tempoAtaque1;
-    this.cooldownAtaque1 = 350; 
-    this.dano = 20;
-    this.isMoving = false;
+  iniciarAtaque1: function () {
+    if (!this.atacando2 && !this.pulando) {
+      this.atacando1 = true;
+      this.tempoRestanteAtaque1 = this.tempoAtaque1;
+      this.cooldownAtaque1 = 350;
+      this.dano = 20;
+      this.isMoving = false;
     }
   },
 
-  iniciarAtaque2: function() {
-    if(!this.atacando1){
-    this.atacando2 = true;
-    this.tempoRestanteAtaque2 = this.tempoAtaque2;
-    this.cooldownAtaque2 = 3000;
-    this.dano = 40;
-    this.isMoving = false;
+  iniciarAtaque2: function () {
+    if (!this.atacando1  && !this.pulando) {
+      this.atacando2 = true;
+      this.tempoRestanteAtaque2 = this.tempoAtaque2;
+      this.cooldownAtaque2 = 3000;
+      this.dano = 40;
+      this.isMoving = false;
     }
   },
 
   //Gerencia coowdowns
 
-  cooldown: function(){
+  cooldown: function () {
     if (this.cooldownAtaque1 > 0)
       this.cooldownAtaque1 = this.cooldownAtaque1 - 5;
     if (this.cooldownAtaque2 > 0)
@@ -232,42 +264,43 @@ Jogador.prototype = {
 
     if (this.tempoRestanteAtaque1 > 0) {
       this.tempoRestanteAtaque1--;
-      if (this.tempoRestanteAtaque1 === 0) 
+      if (this.tempoRestanteAtaque1 === 0)
         this.atacando1 = false;
     }
 
     if (this.tempoRestanteAtaque2 > 0) {
       this.tempoRestanteAtaque2--;
-      if (this.tempoRestanteAtaque2 === 0) 
+      if (this.tempoRestanteAtaque2 === 0)
         this.atacando2 = false;
     }
   },
 
   //Verifica vida
 
-  verificaVida: function(){
+  verificaVida: function () {
     this.morto = true;
     this.animandoMorte = true;
     this.frameMorre = 0;
     this.contadorMorre = 0;
+    this.sons.reproduzirMorte();
   },
 
   //Função para receber dano
 
   tomaDano: function (habilidade) {
     if (!this.animaDano) {
+      this.sons.reproduzirDano();
       this.animaDano = true;
       this.vida -= habilidade;
       setTimeout(() => {
-        this.animaDano = false; 
+        this.animaDano = false;
       }, 450);
-    } 
+    }
   },
 
   // Função Morrer (Implementar)
 
-  morrer: function () {
-    console.log("Game Over");
+  renascer: function () {
     this.morto = false;
     this.animandoMorte = false;
     this.vida = 100;
@@ -275,7 +308,7 @@ Jogador.prototype = {
     this.y = this.groundHeight;
   },
 
-  desenharJogador: function() {
+  desenharJogador: function () {
     let sprite, numSprites, largSprite, altSprite, frame, contador;
 
     if (this.atacando1) {
@@ -345,7 +378,7 @@ Jogador.prototype = {
         this.height
       );
     }
-     else {
+    else {
       this.context.drawImage(
         sprite,
         frame * largSprite,
@@ -361,15 +394,15 @@ Jogador.prototype = {
 
     if (this.pulando && (this.atacando1 || this.atacando2)) {
       this.context.drawImage(
-          sprite,
-          frame * largSprite,
-          0,
-          largSprite,
-          altSprite,
-          this.x,
-          this.y,
-          this.width,
-          this.height
+        sprite,
+        frame * largSprite,
+        0,
+        largSprite,
+        altSprite,
+        this.x,
+        this.y,
+        this.width,
+        this.height
       );
     }
 
@@ -404,8 +437,8 @@ Jogador.prototype = {
       this.contadorIdle = contador;
     }
   },
-  
-  desenharBarraVida: function() {
+
+  desenharBarraVida: function () {
     // Lógica para desenhar a barra de vida
     var textoVidaX = 16;
     var textoVidaY = this.context.canvas.height - 23;
@@ -413,7 +446,7 @@ Jogador.prototype = {
     var barraVidaY = this.context.canvas.height - 20;
     var barraVidaWidth = 30;
     var barraVidaHeight = 10;
-  
+
     // Definir a cor da barra de vida com base na vida restante
     if (this.vida > 60) {
       this.corVida = "green";
@@ -422,7 +455,7 @@ Jogador.prototype = {
     } else {
       this.corVida = "red";
     }
-  
+
     this.context.fillStyle = this.corVida;
     this.context.font = "18px Impact, fantasy";
     this.context.fillText(this.vida, textoVidaX, textoVidaY);
@@ -433,8 +466,8 @@ Jogador.prototype = {
       barraVidaHeight
     );
   },
-  
-  desenharBarrasCooldown: function() {
+
+  desenharBarrasCooldown: function () {
     var cooldownBarWidth = 100;
     var cooldownBarHeight = 10;
     var cooldownBarX1 = 50;
@@ -481,7 +514,7 @@ Jogador.prototype = {
     }
   },
 
-  desenhar: function () {
+  desenhar: function () { 
     this.desenharJogador();
     this.desenharBarraVida();
     this.desenharBarrasCooldown();
