@@ -1,10 +1,11 @@
-function Animacao(context,background,sons,jogador) {
+function Animacao(context,background,sons,jogador,jogador2) {
     this.context = context;
     this.sprites = [];
     this.ligado = false;
     this.background = background
     this.sons = sons;
     this.jogador = jogador
+    this.jogador2=jogador2
 }
 
 Animacao.prototype.novoSprite = function (sprite) {
@@ -14,6 +15,7 @@ Animacao.prototype.novoSprite = function (sprite) {
 Animacao.prototype.ligar = function () {
     var animacao = this;
     var jogador = this.jogador
+    var jogador2=this.jogador2
 
     if (!jogador.carregado) {
         setTimeout(function () {

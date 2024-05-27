@@ -6,7 +6,6 @@ function TelaInicio(context, canvasWidth, canvasHeight) {
 }
 
     TelaInicio.prototype = {
-        
         desenhar: function () {
             this.context.fillStyle = "black";
             this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
