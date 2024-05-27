@@ -4,6 +4,7 @@ var SETA_CIMA = 38;
 var SETA_BAIXO = 40;
 var Q = 81;
 var W = 87;
+var ESPACO = 32
 
 function Teclado(elemento) {
     this.elemento = elemento;

@@ -1,8 +1,10 @@
-function Animacao(context,background,sons) {
+function Animacao(context,background,sons,jogador) {
     this.context = context;
     this.sprites = [];
     this.ligado = false;
     this.background = background
+    this.sons = sons;
+    this.jogador = jogador
 }
 
 Animacao.prototype.novoSprite = function (sprite) {
@@ -11,6 +13,7 @@ Animacao.prototype.novoSprite = function (sprite) {
 
 Animacao.prototype.ligar = function () {
     var animacao = this;
+    var jogador = this.jogador
 
     if (!jogador.carregado) {
         setTimeout(function () {
@@ -28,11 +31,11 @@ Animacao.prototype.desligar = function () {
 };
 
 Animacao.prototype.proximoFrame = function () {
-    if (!this.ligado) return;
-
+    if (!this.ligado) return
     this.limparTela();
     
     this.background.desenhaBackground();
+    this.sons.reproduzirMusicaFundo();
 
 
     for (var i = 0; i < this.sprites.length; i++) {

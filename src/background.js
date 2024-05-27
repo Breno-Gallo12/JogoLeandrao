@@ -3,6 +3,7 @@ function Background(context, canvasWidth, canvasHeight, jogador) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.movSpeed = 0;
+    this.jogador = jogador
 
     this.images = [
         '../img/background/1.png',
@@ -73,6 +74,7 @@ Background.prototype = {
         var maxSol = 0.05;
         var maxArvore = 2.5
         var maxGeral = 3
+        var jogador = this.jogador
 
 
         if (jogador.movingBack) {

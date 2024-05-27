@@ -2,10 +2,11 @@ var DIRECAO_ESQUERDA = 1;
 var DIRECAO_DIREITA = 2;
 
 
-function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight) {
+function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, telaGameOver) {
   this.context = context;
   this.teclado = teclado;
   this.animacao = animacao;
+  this.telaGameOver = telaGameOver
   this.sons = sons;
   this.vida = 100;
   this.x = 0;
@@ -32,6 +33,7 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight) {
   this.tempoRestanteAtaque1 = 0;
   this.tempoRestanteAtaque2 = 0;
   this.dano = 0;
+  this.ultimoPulo = 0;
 
 
   // Constantes do chão com deslocamento vertical
@@ -145,8 +147,12 @@ Jogador.prototype = {
   },
 
   pular: function () {
+    var agora = new Date().getTime();
+    if(agora - this.ultimoPulo > 1000){
     this.velocidadeY = -12;
     this.pulando = true;
+    this.ultimoPulo = agora
+    }
   },
 
   gravidade: function () {
@@ -164,6 +170,7 @@ Jogador.prototype = {
     // Movimento horizontal, ESQUERDA E DIREITA
     if (this.teclado.pressionada(SETA_ESQUERDA) && this.teclado.pressionada(SETA_DIREITA)) {
       this.bugDireitaEsquerda();
+      this.sons.pausarCorrer();
 
     } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
       this.moverEsquerda();
@@ -222,11 +229,13 @@ Jogador.prototype = {
 
     // Checar vida
     if (this.vida <= 0 && !this.morto) {
-      this.verificaVida();
+      this.verificaVida(); 
+      return;
     }
 
     if (this.animandoMorte) {
       if (this.frameMorre === this.numSpritesMorre - 1) {
+        this.animandoMorte = false
         this.renascer();
       }
       return;
@@ -283,6 +292,7 @@ Jogador.prototype = {
     this.frameMorre = 0;
     this.contadorMorre = 0;
     this.sons.reproduzirMorte();
+    this.telaGameOver.mostrarGameOver();
   },
 
   //Função para receber dano
