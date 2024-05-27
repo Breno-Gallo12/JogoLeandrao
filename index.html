@@ -18,31 +18,18 @@
     <script src="./src/personagem.js"></script>
     <script src="./src/animacao.js"></script>
     <script src="./src/teclado.js"></script>
+    <script src="./src/sons.js"></script>
+    <script src="./src/tela.js"></script>
+    <script src="./src/gameOver.js"></script>
+    <script src="./src/jogo.js"></script>
 
     <script>
         // Obtém o contexto do canvas
         var canvas = document.getElementById('meuCanvas');
-        var context = canvas.getContext('2d');
-
-        // Inicializa o teclado
-        var teclado = new Teclado(document);
-
-        // Cria uma instância de Jogador
-        var jogador = new Jogador(context, teclado, null, canvas.width, canvas.height);
-        jogador.vida = 100;
-
-        // Cria uma instância de Background e desenha o background
-        var background = new Background(context, canvas.width, canvas.height, jogador);
-
-        // Cria uma instância de Animacao
-        var animacao = new Animacao(context, background);
-
-        // Adiciona o jogador à animação
-        animacao.novoSprite(jogador);
-
-        // Liga a animação
-        animacao.ligar();
+        var jogo = new Jogo(canvas)
+        jogo.inicio()
     </script>
+
 </body>
 
 </html>
