@@ -1,9 +1,17 @@
 var SETA_ESQUERDA = 37;
 var SETA_DIREITA = 39;
 var SETA_CIMA = 38;
-var SETA_BAIXO = 40;
 var Q = 81;
 var W = 87;
+var ESPACO = 32
+var A = 65;
+var D = 68;
+var V = 86;
+var B = 66;
+var n2 = 98;
+var n3= 99;
+
+
 
 function Teclado(elemento) {
     this.elemento = elemento;

@@ -2,17 +2,17 @@ var DIRECAO_ESQUERDA = 1;
 var DIRECAO_DIREITA = 2;
 
 
-function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, telaGameOver) {
+function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, telaGameOver) {
   this.context = context;
   this.teclado = teclado;
   this.animacao = animacao;
   this.telaGameOver = telaGameOver
   this.sons = sons;
   this.vida = 100;
-  this.x = 0;
+  this.x = 500;
   this.y = 0;
-  this.width = 400;
-  this.height = 400;
+  this.width = 195;
+  this.height = 195;
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
   this.direcao = DIRECAO_DIREITA;
@@ -37,20 +37,20 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
 
 
   // Constantes do chão com deslocamento vertical
-  this.verticalOffset = -120; // Deslocamento para subir o jogador acima do chão
+  this.verticalOffset = 20; // Deslocamento para subir o jogador acima do chão
   this.groundHeight = canvasHeight - this.height - this.verticalOffset;
 
   // Código para carregar e configurar sprites
   this.spriteParado = new Image();
-  this.spriteParado.src = "../img/Sprites/Idle.png";
-  this.numSpritesIdle = 4;
+  this.spriteParado.src = "../img/Sprites2/Idle.png";
+  this.numSpritesIdle = 6;
   this.largSpriteIdle = this.spriteParado.width / this.numSpritesIdle;
   this.altSpriteIdle = this.spriteParado.height;
   this.frameIdle = 0;
   this.contadorIdle = 0;
 
   this.spriteCorrendo = new Image();
-  this.spriteCorrendo.src = "../img/Sprites/Run.png";
+  this.spriteCorrendo.src = "../img/Sprites2/Run.png";
   this.numSpritesCorrendo = 8;
   this.largSpriteCorrendo = this.spriteCorrendo.width / this.numSpritesCorrendo;
   this.altSpriteCorrendo = this.spriteCorrendo.height;
@@ -58,15 +58,15 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.contadorCorrendo = 0;
 
   this.spritePulando = new Image();
-  this.spritePulando.src = "../img/Sprites/Jump.png";
-  this.numSpritesPulando = 2;
+  this.spritePulando.src = "../img/Sprites2/Jump.png";
+  this.numSpritesPulando = 9;
   this.largSpritePulando = this.spritePulando.width / this.numSpritesPulando;
   this.altSpritePulando = this.spritePulando.height;
   this.framePulando = 0;
   this.contadorPulando = 0;
 
   this.spriteAtaque1 = new Image();
-  this.spriteAtaque1.src = "../img/Sprites/Attack1.png";
+  this.spriteAtaque1.src = "../img/Sprites2/Attack_1.png";
   this.numSpritesAtaque1 = 4;
   this.largSpriteAtaque1 = this.spriteAtaque1.width / this.numSpritesAtaque1;
   this.altSpriteAtaque1 = this.spriteAtaque1.height;
@@ -74,7 +74,7 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.contadorAtaque1 = 0;
 
   this.spriteAtaque2 = new Image();
-  this.spriteAtaque2.src = "../img/Sprites/Attack2.png";
+  this.spriteAtaque2.src = "../img/Sprites2/Attack_3.png";
   this.numSpritesAtaque2 = 4;
   this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
@@ -82,15 +82,15 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.contadorAtaque2 = 0;
 
   this.spriteMorre = new Image();
-  this.spriteMorre.src = "../img/Sprites/Death.png";
-  this.numSpritesMorre = 7;
+  this.spriteMorre.src = "../img/Sprites2/Dead.png";
+  this.numSpritesMorre = 6;
   this.largSpriteMorre = this.spriteMorre.width / this.numSpritesMorre;
   this.altSpriteMorre = this.spriteMorre.height;
   this.frameMorre = 0;
   this.contadorMorre = 0;
 
   this.spriteDano = new Image();
-  this.spriteDano.src = "../img/Sprites/Take hit.png";
+  this.spriteDano.src = "../img/Sprites2/Hurt.png";
   this.numSpritesDano = 3;
   this.largSpriteDano = this.spriteDano.width / this.numSpritesDano;
   this.altSpriteDano = this.spriteDano.height;
@@ -111,8 +111,8 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.carregado = false
 
 }
-
-Jogador.prototype = {
+//
+Jogador2.prototype = {
 
   verificarSpritesCarregadas: function () {
     this.spritesCarregadas++;
@@ -125,7 +125,6 @@ Jogador.prototype = {
   },
 
   // Funções de movimentação
-
   moverEsquerda: function () {
     this.direcao = DIRECAO_ESQUERDA;
     this.x -= 5;
@@ -168,15 +167,16 @@ Jogador.prototype = {
 
   atualizar: function () {
     // Movimento horizontal, ESQUERDA E DIREITA
-    if (this.teclado.pressionada(A) && this.teclado.pressionada(D)) {
+    if (this.teclado.pressionada(SETA_ESQUERDA) && this.teclado.pressionada(SETA_DIREITA)) {
       this.bugDireitaEsquerda();
       this.sons.pausarCorrer();
 
-    } else if (this.teclado.pressionada(A) && this.x >= -177) {
+    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -120) {
       this.moverEsquerda();
       this.sons.reproduzirCorrer();
 
-    } else if (this.teclado.pressionada(D) && this.x <= 582) {
+
+    } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 710) {
       this.moverDireita();
       this.sons.reproduzirCorrer();
 
@@ -187,24 +187,24 @@ Jogador.prototype = {
     }
 
     // Gerenciar ataques e cooldown
-    if ((this.teclado.pressionada(W) || this.pulando) && (this.teclado.pressionada(V) || this.teclado.pressionada(B))) {
+    if ((this.teclado.pressionada(SETA_CIMA) || this.pulando) && (this.teclado.pressionada(n2) || this.teclado.pressionada(n3))) {
       this.pulando = true;
       this.atacando1 = false;
       this.atacando2 = false;
     }
-    else if (this.teclado.pressionada(V) && this.teclado.pressionada(B)) {
+    else if (this.teclado.pressionada(n2) && this.teclado.pressionada(n3)) {
       this.atacando1 = false
       this.atacando2 = false
     }
-    else if (this.teclado.pressionada(V) && this.cooldownAtaque1 === 0) {
+    else if (this.teclado.pressionada(n2) && this.cooldownAtaque1 === 0) {
       this.iniciarAtaque1();
       this.sons.reproduzirAtaque1();
 
-    } else if (this.teclado.pressionada(B) && this.cooldownAtaque2 === 0) {
+    } else if (this.teclado.pressionada(n3) && this.cooldownAtaque2 === 0) {
       this.iniciarAtaque2();
       this.sons.reproduzirAtaque2();
 
-    }if (((this.teclado.pressionada(V) && this.cooldownAtaque1 === 0) || this.teclado.pressionada(B) && this.cooldownAtaque2 === 0) && (this.teclado.pressionada(SETA_DIREITA) || this.teclado.pressionada(SETA_ESQUERDA))) {
+    }if (((this.teclado.pressionada(n2) && this.cooldownAtaque1 === 0) || this.teclado.pressionada(n3) && this.cooldownAtaque2 === 0) && (this.teclado.pressionada(SETA_DIREITA) || this.teclado.pressionada(SETA_ESQUERDA))) {
       this.isMoving = true;
       this.iniciarAtaque1();
       this.iniciarAtaque2();
@@ -214,7 +214,7 @@ Jogador.prototype = {
     this.cooldown();
 
     // Pulo
-    if (this.teclado.pressionada(W) && !this.pulando) {
+    if (this.teclado.pressionada(SETA_CIMA) && !this.pulando) {
       this.sons.reproduzirPulo();
       this.pular();
     }
@@ -314,11 +314,11 @@ Jogador.prototype = {
     this.morto = false;
     this.animandoMorte = false;
     this.vida = 100;
-    this.x = 0;
+    this.x = 500;
     this.y = this.groundHeight;
   },
 
-  desenharJogador: function () {
+  desenharJogador2: function () {
     let sprite, numSprites, largSprite, altSprite, frame, contador;
 
     if (this.atacando1) {
@@ -419,7 +419,7 @@ Jogador.prototype = {
     this.context.restore();
 
     contador++;
-    if (contador >= 10) {
+    if (contador >= 7) {
       frame = (frame + 1) % numSprites;
       contador = 0;
     }
@@ -450,9 +450,9 @@ Jogador.prototype = {
 
   desenharBarraVida: function () {
     // Lógica para desenhar a barra de vida
-    var textoVidaX = 16;
+    var textoVidaX = 762;
     var textoVidaY = this.context.canvas.height - 23;
-    var barraVidaX = 15;
+    var barraVidaX = 760;
     var barraVidaY = this.context.canvas.height - 20;
     var barraVidaWidth = 30;
     var barraVidaHeight = 10;
@@ -480,9 +480,9 @@ Jogador.prototype = {
   desenharBarrasCooldown: function () {
     var cooldownBarWidth = 100;
     var cooldownBarHeight = 10;
-    var cooldownBarX1 = 50;
+    var cooldownBarX1 = 655;
     var cooldownBarY1 = 480;
-    var cooldownBarX2 = 155;
+    var cooldownBarX2 = 550;
     var cooldownBarY2 = 480;
 
     // Barra de cooldown para o ataque 1
@@ -525,7 +525,7 @@ Jogador.prototype = {
   },
 
   desenhar: function () { 
-    this.desenharJogador();
+    this.desenharJogador2();
     this.desenharBarraVida();
     this.desenharBarrasCooldown();
   },

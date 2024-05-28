@@ -1,5 +1,4 @@
 function Som(){
-
     this.musicaFundo = new Audio("../sons/musicaFundo.mp3");
     this.correndo = new Audio("../sons/correndo.mp3");
     this.ataque1 = new Audio("../sons/ataque1.mp3");
@@ -7,12 +6,9 @@ function Som(){
     this.morte = new Audio("../sons/morte.mp3");
     this.dano = new Audio("../sons/dano.mp3");
     this.pulo = new Audio("../sons/pulo.mp3");
-
-
 }
 
 Som.prototype = {
-
     reproduzirMusicaFundo: function() {
         this.musicaFundo.loop = true;
         this.musicaFundo.volume = 0.05; 
