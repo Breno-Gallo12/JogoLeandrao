@@ -7,32 +7,15 @@ function TelaGameOver(context, canvasWidth, canvasHeight) {
 
 TelaGameOver.prototype = {
 
-    desenhar: function () {
-        this.context.fillStyle = "black";
-        this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-        this.context.fillStyle = "white";
-        this.context.font = "30px Arial";
-        this.context.fillText("Game Over", 100, 200);
-    },
-
-    mostrarGameOver: function () {
-        // Mostra a tela de Game Over
-        this.desenhar();
-
-        // Configura um ouvinte de evento para aguardar a tecla de espaço ser pressionada
-        document.addEventListener("keydown", function (event) {
-            if (event.keyCode === 32) { // Código da tecla de espaço
-                // Reinicia o jogo
-                this.reiniciarJogo();
-            }
-        }.bind(this));
-    },
-    // Reinicia o jogo
-    reiniciarJogo: function () {
-        // Remove o ouvinte de evento da tecla de espaço
-        document.removeEventListener("keydown");
-
-        // Reinicia o jogo chamando o método inicio novamente
-        this.inicio();
-    }
+    desenhar: function (vencedor, perdedor) {
+            this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+            this.context.font = '36px Arial';
+            this.context.fillStyle = 'red';
+            this.context.textAlign = 'center';
+            this.context.fillText('Game Over', this.context.canvas.width / 2, this.context.canvas.height / 2 - 60);
+            this.context.fillStyle = 'white';
+            this.context.fillText(vencedor.nome + ' venceu!', this.context.canvas.width / 2, this.context.canvas.height / 2);
+            this.context.fillStyle = 'blue';
+            this.context.fillText('Pressione Espaço para reiniciar', this.context.canvas.width / 2, this.context.canvas.height / 2 + 60);
+        }
 }

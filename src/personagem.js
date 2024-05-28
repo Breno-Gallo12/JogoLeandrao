@@ -6,6 +6,7 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.context = context;
   this.teclado = teclado;
   this.animacao = animacao;
+  this.nome = "Jogador 1"
   this.telaGameOver = telaGameOver
   this.sons = sons;
   this.vida = 100;
@@ -20,7 +21,8 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.pulando = false;
   this.corVida = "green";
   this.isMoving = false;
-  this.movingBack = false;
+  this.movingEsquerda = false;
+  this.movingDireita = false;
   this.atacando1 = false;
   this.atacando2 = false;
   this.morto = false;
@@ -34,6 +36,7 @@ function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, te
   this.tempoRestanteAtaque2 = 0;
   this.dano = 0;
   this.ultimoPulo = 0;
+  this.vivo = true;
 
 
   // Constantes do chão com deslocamento vertical
@@ -130,20 +133,21 @@ Jogador.prototype = {
     this.direcao = DIRECAO_ESQUERDA;
     this.x -= 5;
     this.isMoving = true;
-    this.movingBack = false;
+    this.movingEsquerda = true;
   },
 
   moverDireita: function () {
     this.direcao = DIRECAO_DIREITA;
     this.x += 5;
     this.isMoving = true;
-    this.movingBack = true;
+    this.movingDireita = true;
   },
 
   bugDireitaEsquerda: function () {
     this.x += 0;
     this.isMoving = false;
-    this.movingBack = false;
+    this.movingDireita = false;
+    this.movingEsquerda = false;
   },
 
   pular: function () {
@@ -182,7 +186,8 @@ Jogador.prototype = {
 
     } else {
       this.isMoving = false;
-      this.movingBack = false;
+      this.movingDireita = false;
+      this.movingEsquerda = false;
       this.sons.pausarCorrer();
     }
 
@@ -228,15 +233,14 @@ Jogador.prototype = {
     }
 
     // Checar vida
-    if (this.vida <= 0 && !this.morto) {
-      this.verificaVida(); 
+    if (this.vida <= 0) {
+      this.vivo = false;
       return;
     }
 
     if (this.animandoMorte) {
       if (this.frameMorre === this.numSpritesMorre - 1) {
         this.animandoMorte = false
-        this.renascer();
       }
       return;
     }
@@ -308,14 +312,36 @@ Jogador.prototype = {
     }
   },
 
-  // Função Morrer (Implementar)
 
-  renascer: function () {
-    this.morto = false;
-    this.animandoMorte = false;
+  resetar: function (canvasWidth,canvasHeight) {
+    this.nome = "Jogador 1"
     this.vida = 100;
     this.x = 0;
-    this.y = this.groundHeight;
+    this.y = 0;
+    this.width = 400;
+    this.height = 400;
+    this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
+    this.velocidadeY = 0;
+    this.pulando = false;
+    this.corVida = "green";
+    this.isMoving = false;
+    this.movingEsquerda = false;
+    this.movingDireita = false;
+    this.atacando1 = false;
+    this.atacando2 = false;
+    this.morto = false;
+    this.animaDano = false;
+    this.animandoMorte = false;
+    this.tempoAtaque1 = 30;
+    this.tempoAtaque2 = 40;
+    this.cooldownAtaque1 = 0;
+    this.cooldownAtaque2 = 0;
+    this.tempoRestanteAtaque1 = 0;
+    this.tempoRestanteAtaque2 = 0;
+    this.dano = 0;
+    this.ultimoPulo = 0;
+    this.vivo = true; 
   },
 
   desenharJogador: function () {

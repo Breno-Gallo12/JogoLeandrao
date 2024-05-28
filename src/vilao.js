@@ -7,6 +7,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.teclado = teclado;
   this.animacao = animacao;
   this.telaGameOver = telaGameOver
+  this.nome = "Jogador 2"
   this.sons = sons;
   this.vida = 100;
   this.x = 500;
@@ -20,7 +21,8 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.pulando = false;
   this.corVida = "green";
   this.isMoving = false;
-  this.movingBack = false;
+  this.movingEsquerda = false;
+  this.movingDireita = false;
   this.atacando1 = false;
   this.atacando2 = false;
   this.morto = false;
@@ -34,6 +36,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.tempoRestanteAtaque2 = 0;
   this.dano = 0;
   this.ultimoPulo = 0;
+  this.vivo = true;
 
 
   // Constantes do chão com deslocamento vertical
@@ -129,20 +132,21 @@ Jogador2.prototype = {
     this.direcao = DIRECAO_ESQUERDA;
     this.x -= 5;
     this.isMoving = true;
-    this.movingBack = false;
+    this.movingEsquerda = true;
   },
 
   moverDireita: function () {
     this.direcao = DIRECAO_DIREITA;
     this.x += 5;
     this.isMoving = true;
-    this.movingBack = true;
+    this.movingDireita = true;
   },
 
   bugDireitaEsquerda: function () {
     this.x += 0;
     this.isMoving = false;
-    this.movingBack = false;
+    this.movingDireita = false;
+    this.movingEsquerda = false;
   },
 
   pular: function () {
@@ -182,7 +186,8 @@ Jogador2.prototype = {
 
     } else {
       this.isMoving = false;
-      this.movingBack = false;
+      this.movingDireita = false;
+      this.movingEsquerda = false;
       this.sons.pausarCorrer();
     }
 
@@ -229,14 +234,13 @@ Jogador2.prototype = {
 
     // Checar vida
     if (this.vida <= 0 && !this.morto) {
-      this.verificaVida(); 
+      this.vivo = false
       return;
     }
 
     if (this.animandoMorte) {
       if (this.frameMorre === this.numSpritesMorre - 1) {
         this.animandoMorte = false
-        this.renascer();
       }
       return;
     }
@@ -310,13 +314,36 @@ Jogador2.prototype = {
 
   // Função Morrer (Implementar)
 
-  renascer: function () {
-    this.morto = false;
-    this.animandoMorte = false;
+  resetar: function (canvasWidth,canvasHeight) {
+    this.nome = "Jogador 2"
     this.vida = 100;
     this.x = 500;
-    this.y = this.groundHeight;
-  },
+    this.y = 0;
+    this.width = 195;
+    this.height = 195;
+    this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
+    this.velocidadeY = 0;
+    this.pulando = false;
+    this.corVida = "green";
+    this.isMoving = false;
+    this.movingEsquerda = false;
+    this.movingDireita = false;
+    this.atacando1 = false;
+    this.atacando2 = false;
+    this.morto = false;
+    this.animaDano = false;
+    this.animandoMorte = false;
+    this.tempoAtaque1 = 30;
+    this.tempoAtaque2 = 40;
+    this.cooldownAtaque1 = 0;
+    this.cooldownAtaque2 = 0;
+    this.tempoRestanteAtaque1 = 0;
+    this.tempoRestanteAtaque2 = 0;
+    this.dano = 0;
+    this.ultimoPulo = 0;
+    this.vivo = true;
+    },
 
   desenharJogador2: function () {
     let sprite, numSprites, largSprite, altSprite, frame, contador;

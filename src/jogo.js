@@ -8,7 +8,7 @@ function Jogo(canvas) {
     this.jogador = new Jogador(this.context, this.teclado, this.animacao, this.sons, this.canvas.width, this.canvas.height,this.telaGameOver);
     this.jogador2 = new Jogador2(this.context, this.teclado, this.animacao, this.sons, this.canvas.width, this.canvas.height,this.telaGameOver);
     this.background = new Background(this.context, this.canvas.width, this.canvas.height, this.jogador,this.jogador2);
-    this.animacao = new Animacao(this.context, this.background, this.sons, this.jogador,this.jogador2);
+    this.animacao = new Animacao(this.context, this.background, this.sons, this.jogador,this.jogador2, this.telaGameOver,this, this.canvas.width, this.canvas.height);
     this.gameState = true;
 }
 
@@ -38,15 +38,30 @@ Jogo.prototype = {
     },
 
     loopJogo: function () {
-        if (this.gameState === false && !this.jogador.morto){
+        if (this.gameState === false && !this.jogador.morto && !this.jogador2.morto){
             this.animacao.novoSprite(this.jogador);
             this.animacao.novoSprite(this.jogador2);
             this.animacao.ligar();
-        } else if (this.jogador.morto === true) {
-            this.telaGameOver.mostrarGameOver();
         }
         else {
             this.telaInicio.desenhar();
         }
     },
+
+    mostrarGameOver: function (vencedor, perdedor) {
+        var espacoPressionado = false;
+
+        this.telaGameOver.desenhar(vencedor,perdedor);
+        
+        document.addEventListener("keydown", function (event) {
+            if (event.keyCode === 32 && !espacoPressionado) {
+                espacoPressionado = true
+                this.reiniciarJogo();
+            }
+        }.bind(this));
+    },
+
+    reiniciarJogo: function () {
+        this.animacao.reiniciar();
+    }
 }
