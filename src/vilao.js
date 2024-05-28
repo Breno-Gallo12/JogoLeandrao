@@ -11,8 +11,8 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.vida = 100;
   this.x = 500;
   this.y = 0;
-  this.width = 210;
-  this.height = 210;
+  this.width = 195;
+  this.height = 195;
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
   this.direcao = DIRECAO_DIREITA;
@@ -74,8 +74,8 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorAtaque1 = 0;
 
   this.spriteAtaque2 = new Image();
-  this.spriteAtaque2.src = "../img/Sprites2/Attack_2.png";
-  this.numSpritesAtaque2 = 5;
+  this.spriteAtaque2.src = "../img/Sprites2/Attack_3.png";
+  this.numSpritesAtaque2 = 4;
   this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
   this.frameAtaque2 = 0;
@@ -171,11 +171,12 @@ Jogador2.prototype = {
       this.bugDireitaEsquerda();
       this.sons.pausarCorrer();
 
-    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -177) {
+    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -120) {
       this.moverEsquerda();
       this.sons.reproduzirCorrer();
 
-    } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 582) {
+
+    } else if (this.teclado.pressionada(SETA_DIREITA) && this.x <= 710) {
       this.moverDireita();
       this.sons.reproduzirCorrer();
 
@@ -297,7 +298,6 @@ Jogador2.prototype = {
   //Função para receber dano
 
   tomaDano: function (habilidade) {
-    debugger
     if (!this.animaDano) {
       this.sons.reproduzirDano();
       this.animaDano = true;
@@ -314,7 +314,7 @@ Jogador2.prototype = {
     this.morto = false;
     this.animandoMorte = false;
     this.vida = 100;
-    this.x = 0;
+    this.x = 500;
     this.y = this.groundHeight;
   },
 
@@ -450,9 +450,9 @@ Jogador2.prototype = {
 
   desenharBarraVida: function () {
     // Lógica para desenhar a barra de vida
-    var textoVidaX = 16;
+    var textoVidaX = 762;
     var textoVidaY = this.context.canvas.height - 23;
-    var barraVidaX = 15;
+    var barraVidaX = 760;
     var barraVidaY = this.context.canvas.height - 20;
     var barraVidaWidth = 30;
     var barraVidaHeight = 10;
@@ -480,9 +480,9 @@ Jogador2.prototype = {
   desenharBarrasCooldown: function () {
     var cooldownBarWidth = 100;
     var cooldownBarHeight = 10;
-    var cooldownBarX1 = 50;
+    var cooldownBarX1 = 655;
     var cooldownBarY1 = 480;
-    var cooldownBarX2 = 155;
+    var cooldownBarX2 = 550;
     var cooldownBarY2 = 480;
 
     // Barra de cooldown para o ataque 1
@@ -526,7 +526,7 @@ Jogador2.prototype = {
 
   desenhar: function () { 
     this.desenharJogador2();
-    // this.desenharBarraVida();
+    this.desenharBarraVida();
     this.desenharBarrasCooldown();
   },
 };

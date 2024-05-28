@@ -14,10 +14,10 @@ Animacao.prototype.novoSprite = function (sprite) {
 
 Animacao.prototype.ligar = function () {
     var animacao = this;
-    var jogador = this.jogador
-    var jogador2=this.jogador2
+    var jogador = this.jogador;
+    var jogador2 =this.jogador2;
 
-    if (!jogador.carregado) {
+    if (!jogador.carregado && !jogador2.carregado) {
         setTimeout(function () {
             animacao.ligar();
         }, 100);

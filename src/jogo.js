@@ -7,11 +7,8 @@ function Jogo(canvas) {
     this.telaGameOver = new TelaGameOver(this.context, this.canvas.width, this.canvas.height);
     this.jogador = new Jogador(this.context, this.teclado, this.animacao, this.sons, this.canvas.width, this.canvas.height,this.telaGameOver);
     this.jogador2 = new Jogador2(this.context, this.teclado, this.animacao, this.sons, this.canvas.width, this.canvas.height,this.telaGameOver);
-    this.background = new Background(this.context, this.canvas.width, this.canvas.height, this.jogador);
-    this.background = new Background(this.context, this.canvas.width, this.canvas.height, this.jogador2);
-    this.animacao = new Animacao(this.context, this.background, this.sons, this.jogador);
-    this.gameState = true;
-    this.animacao = new Animacao(this.context, this.background, this.sons, this.jogador2);
+    this.background = new Background(this.context, this.canvas.width, this.canvas.height, this.jogador,this.jogador2);
+    this.animacao = new Animacao(this.context, this.background, this.sons, this.jogador,this.jogador2);
     this.gameState = true;
 }
 

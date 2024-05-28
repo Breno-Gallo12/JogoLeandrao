@@ -1,9 +1,11 @@
-function Background(context, canvasWidth, canvasHeight, jogador) {
+function Background(context, canvasWidth, canvasHeight, jogador, jogador2) {
     this.context = context;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.movSpeed = 0;
     this.jogador = jogador
+    this.jogador2 = jogador2
+
 
     this.images = [
         '../img/background/1.png',
@@ -75,9 +77,11 @@ Background.prototype = {
         var maxArvore = 2.5
         var maxGeral = 3
         var jogador = this.jogador
+        var jogador2 = this.jogador2
 
 
-        if (jogador.movingBack) {
+
+        if (jogador.movingBack || jogador2.movingBack) {
             this.fundo.forEach(object => {
                 if (object === this.solLayer) {
                     if (object.speedModifier < maxSol) { 
