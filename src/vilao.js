@@ -12,8 +12,8 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.vida = 100;
   this.x = 500;
   this.y = 0;
-  this.width = 195;
-  this.height = 195;
+  this.width = 155;
+  this.height = 155;
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
   this.direcao = DIRECAO_DIREITA;
@@ -54,7 +54,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
 
   this.spriteCorrendo = new Image();
   this.spriteCorrendo.src = "../img/Sprites2/Run.png";
-  this.numSpritesCorrendo = 8;
+  this.numSpritesCorrendo = 6;
   this.largSpriteCorrendo = this.spriteCorrendo.width / this.numSpritesCorrendo;
   this.altSpriteCorrendo = this.spriteCorrendo.height;
   this.frameCorrendo = 0;
@@ -62,14 +62,14 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
 
   this.spritePulando = new Image();
   this.spritePulando.src = "../img/Sprites2/Jump.png";
-  this.numSpritesPulando = 9;
+  this.numSpritesPulando = 8;
   this.largSpritePulando = this.spritePulando.width / this.numSpritesPulando;
   this.altSpritePulando = this.spritePulando.height;
   this.framePulando = 0;
   this.contadorPulando = 0;
 
   this.spriteAtaque1 = new Image();
-  this.spriteAtaque1.src = "../img/Sprites2/Attack_1.png";
+  this.spriteAtaque1.src = "../img/Sprites2/Attack_2.png";
   this.numSpritesAtaque1 = 4;
   this.largSpriteAtaque1 = this.spriteAtaque1.width / this.numSpritesAtaque1;
   this.altSpriteAtaque1 = this.spriteAtaque1.height;
@@ -77,8 +77,8 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorAtaque1 = 0;
 
   this.spriteAtaque2 = new Image();
-  this.spriteAtaque2.src = "../img/Sprites2/Attack_3.png";
-  this.numSpritesAtaque2 = 4;
+  this.spriteAtaque2.src = "../img/Sprites2/Attack_1.png";
+  this.numSpritesAtaque2 = 6;
   this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
   this.frameAtaque2 = 0;
@@ -86,7 +86,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
 
   this.spriteMorre = new Image();
   this.spriteMorre.src = "../img/Sprites2/Dead.png";
-  this.numSpritesMorre = 6;
+  this.numSpritesMorre = 4;
   this.largSpriteMorre = this.spriteMorre.width / this.numSpritesMorre;
   this.altSpriteMorre = this.spriteMorre.height;
   this.frameMorre = 0;
@@ -94,7 +94,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
 
   this.spriteDano = new Image();
   this.spriteDano.src = "../img/Sprites2/Hurt.png";
-  this.numSpritesDano = 3;
+  this.numSpritesDano = 2;
   this.largSpriteDano = this.spriteDano.width / this.numSpritesDano;
   this.altSpriteDano = this.spriteDano.height;
   this.frameDano = 0;
