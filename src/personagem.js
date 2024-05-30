@@ -296,7 +296,6 @@ Jogador.prototype = {
     this.frameMorre = 0;
     this.contadorMorre = 0;
     this.sons.reproduzirMorte();
-    this.telaGameOver.mostrarGameOver();
   },
 
   //Função para receber dano

@@ -17,18 +17,23 @@ Animacao.prototype.novoSprite = function (sprite) {
 };
 
 Animacao.prototype.reiniciar = function() {
-    this.desligar();
+    if (!this.ligado) {
+        // Limpar a lista de sprites
+        this.sprites = [];
 
-    this.sprites = [];
+        // Resetar os jogadores
+        this.jogador.resetar(this.canvasWidth, this.canvasHeight);
+        this.jogador2.resetar(this.canvasWidth, this.canvasHeight);
 
-    this.jogador.resetar(this.canvasWidth, this.canvasHeight);
-    this.jogador2.resetar(this.canvasWidth, this.canvasHeight);
+        // Adicionar os jogadores à lista de sprites
+        this.novoSprite(this.jogador);
+        this.novoSprite(this.jogador2);
 
-    this.novoSprite(this.jogador);
-    this.novoSprite(this.jogador2);
-
-    this.ligar();
+        // Ligar a animação novamente
+        this.ligar();
+    }
 };
+
 
 
 Animacao.prototype.ligar = function () {
@@ -60,16 +65,18 @@ Animacao.prototype.verificarEstadoJogadores = function() {
 };
 
 Animacao.prototype.animacaoMorte = function(jogadorMorto, outroJogador) {
-
     var animacao = this;
 
-    setTimeout(function() {
-        animacao.jogo.mostrarGameOver(jogadorMorto,outroJogador);
-        animacao.sons.pausarMusicaFundo();
-    }, 2500); // Tempo de espera de 1 segundo (1000 milissegundos)
+    jogadorMorto.animandoMorte = true;
 
-    this.desligar();
-};
+    setTimeout(function() {
+        animacao.sons.pausarMusicaFundo();
+
+        // Exibir a tela de game over
+        animacao.jogo.mostrarGameOver(jogadorMorto, outroJogador);
+    }, 800); 
+}
+
 
 Animacao.prototype.proximoFrame = function () {
     if (!this.ligado) return
