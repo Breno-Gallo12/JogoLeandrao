@@ -10,7 +10,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.nome = "Jogador 2"
   this.sons = sons;
   this.vida = 100;
-  this.x = 500;
+  this.x = 0;
   this.y = 0;
   this.width = 155;
   this.height = 155;
@@ -252,7 +252,7 @@ Jogador2.prototype = {
       this.atacando1 = true;
       this.tempoRestanteAtaque1 = this.tempoAtaque1;
       this.cooldownAtaque1 = 350;
-      this.dano = 20;
+      this.dano = 5;
       this.isMoving = false;
     }
   },
@@ -262,7 +262,7 @@ Jogador2.prototype = {
       this.atacando2 = true;
       this.tempoRestanteAtaque2 = this.tempoAtaque2;
       this.cooldownAtaque2 = 3000;
-      this.dano = 40;
+      this.dano = 10;
       this.isMoving = false;
     }
   },

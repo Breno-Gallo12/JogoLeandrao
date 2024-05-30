@@ -252,7 +252,7 @@ Jogador.prototype = {
       this.atacando1 = true;
       this.tempoRestanteAtaque1 = this.tempoAtaque1;
       this.cooldownAtaque1 = 350;
-      this.dano = 20;
+      this.dano = 5;
       this.isMoving = false;
     }
   },
@@ -262,7 +262,7 @@ Jogador.prototype = {
       this.atacando2 = true;
       this.tempoRestanteAtaque2 = this.tempoAtaque2;
       this.cooldownAtaque2 = 3000;
-      this.dano = 40;
+      this.dano = 10;
       this.isMoving = false;
     }
   },
