@@ -174,21 +174,21 @@ Jogador.prototype = {
     // Movimento horizontal, ESQUERDA E DIREITA
     if (this.teclado.pressionada(A) && this.teclado.pressionada(D)) {
       this.bugDireitaEsquerda();
-      this.sons.pausarCorrer();
+      this.sons.pausarCorrer2();
 
     } else if (this.teclado.pressionada(A) && this.x >= -177) {
       this.moverEsquerda();
-      this.sons.reproduzirCorrer();
+      this.sons.reproduzirCorrer2();
 
     } else if (this.teclado.pressionada(D) && this.x <= 582) {
       this.moverDireita();
-      this.sons.reproduzirCorrer();
+      this.sons.reproduzirCorrer2();
 
     } else {
       this.isMoving = false;
       this.movingDireita = false;
       this.movingEsquerda = false;
-      this.sons.pausarCorrer();
+      this.sons.pausarCorrer2();
     }
 
     // Gerenciar ataques e cooldown
