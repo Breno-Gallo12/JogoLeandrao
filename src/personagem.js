@@ -183,6 +183,11 @@ Jogador.prototype = {
     } else if (this.teclado.pressionada(D) && this.x <= 582) {
       this.moverDireita();
       this.sons.reproduzirCorrer2();
+      this.sons.reproduzirCorrert();
+
+    } else if (this.teclado.pressionada(D) && this.x <= 582) {
+      this.moverDireita();
+      this.sons.reproduzirCorrert();
 
     } else {
       this.isMoving = false;
@@ -220,7 +225,7 @@ Jogador.prototype = {
 
     // Pulo
     if (this.teclado.pressionada(W) && !this.pulando) {
-      this.sons.reproduzirPulo();
+      this.sons.reproduzirPulot();
       this.pular();
     }
 

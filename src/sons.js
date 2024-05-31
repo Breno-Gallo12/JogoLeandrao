@@ -2,12 +2,16 @@ function Som(){
     this.musicaFundo = new Audio("../sons/musicaFundo.mp3");
     this.correndo = new Audio("../sons/correndo.mp3");
     this.correndo2 = new Audio("../sons/correndo2.mp3");
+    this.correndot = new Audio("../sons/correndo.mp3");
     this.ataque1 = new Audio("../sons/ataque1.mp3");
     this.ataque2 = new Audio("../sons/ataque2.mp3");
     this.morte = new Audio("../sons/morte.mp3");
     this.dano = new Audio("../sons/dano.mp3");
     this.pulo = new Audio("../sons/pulando2.mp3");
     this.pulo1 = new Audio("../sons/pulo.mp3");
+    this.pulo = new Audio("../sons/pulo.mp3");
+    this.pulot = new Audio("../sons/pulo.mp3");
+    this.gameOver = new Audio("../sons/gameOver.mp3")
 }
 
 Som.prototype = {
@@ -31,6 +35,12 @@ Som.prototype = {
         this.correndo2.loop = true
         this.correndo2.volume = 1
         this.correndo2.play();
+    },
+
+    reproduzirCorrert: function() {
+        this.correndot.loop = true
+        this.correndot.volume = 1
+        this.correndot.play();
     },
 
     pausarCorrer: function() {
@@ -70,6 +80,14 @@ Som.prototype = {
     reproduzirPulo1: function() {
         this.pulo1.volume = 0.1
         this.pulo1.play();
+    },
+    reproduzirPulot: function() {
+        this.pulot.volume = 0.1
+        this.pulot.play();
+    },
+    reproduzirGameOver: function() {
+        this.gameOver.volume = 0.6
+        this.gameOver.play();
     },
 
 

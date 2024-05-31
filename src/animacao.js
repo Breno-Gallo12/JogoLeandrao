@@ -69,6 +69,14 @@ Animacao.prototype.animacaoMorte = function (jogadorMorto, outroJogador) {
 
     jogadorMorto.animandoMorte = true;
 
+    setTimeout(function() {
+        animacao.jogo.mostrarGameOver(jogadorMorto,outroJogador);
+        animacao.sons.pausarMusicaFundo();
+        animacao.sons.reproduzirGameOver();
+
+    }, 2500); // Tempo de espera de 1 segundo (1000 milissegundos)
+
+
     setTimeout(function () {
         animacao.sons.pausarMusicaFundo();
 
