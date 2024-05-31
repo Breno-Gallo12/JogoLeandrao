@@ -209,7 +209,7 @@ Jogador2.prototype = {
       this.bugDireitaEsquerda();
       this.sons.pausarCorrer();
 
-    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -75) {
+    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -50) {
       this.moverEsquerda();
       this.sons.reproduzirCorrer();
 

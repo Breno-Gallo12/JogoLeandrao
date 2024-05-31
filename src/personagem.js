@@ -209,10 +209,10 @@ Jogador.prototype = {
     if (this.teclado.pressionada(A) && this.teclado.pressionada(D)) {
       this.bugDireitaEsquerda();
       this.sons.pausarCorrer2();
-    } else if (this.teclado.pressionada(A) && this.x >= -177) {
+    } else if (this.teclado.pressionada(A) && this.x >= -50) {
       this.moverEsquerda();
       this.sons.reproduzirCorrer2();
-    } else if (this.teclado.pressionada(D) && this.x <= 582) {
+    } else if (this.teclado.pressionada(D) && this.x <= 710) {
       this.moverDireita();
       this.sons.reproduzirCorrer2();
     } else {
@@ -353,8 +353,8 @@ Jogador.prototype = {
     this.vida = 100;
     this.x = 0;
     this.y = 0;
-    this.width = 400;
-    this.height = 400;
+    this.width = 155;
+    this.height = 155;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.velocidadeY = 0;

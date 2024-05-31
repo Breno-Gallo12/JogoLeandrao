@@ -102,9 +102,9 @@ Animacao.prototype.verificarColisao = function(jogador1, jogador2) {
 
     // Verifica se os retângulos que representam os jogadores se sobrepõem
     if (jogador1.x < jogador2.x + jogador2.width &&
-        jogador1.x + jogador1.width-160 > jogador2.x &&
+        jogador1.x + jogador1.width > jogador2.x &&
         jogador1.y < jogador2.y + jogador2.height &&
-        jogador1.y + jogador1.height-160 > jogador2.y) {
+        jogador1.y + jogador1.height > jogador2.y) {
         colisao = true;
 
         // Verifica se o jogador 1 está atacando
