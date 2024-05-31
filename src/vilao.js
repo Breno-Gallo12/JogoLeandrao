@@ -69,7 +69,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorPulando = 0;
 
   this.spriteAtaque1 = new Image();
-  this.spriteAtaque1.src = "../img/Sprites2/Attack_2.png";
+  this.spriteAtaque1.src = "../img/Sprites2/Attack_2.png?v=1";
   this.numSpritesAtaque1 = 4;
   this.largSpriteAtaque1 = this.spriteAtaque1.width / this.numSpritesAtaque1;
   this.altSpriteAtaque1 = this.spriteAtaque1.height;
@@ -77,7 +77,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorAtaque1 = 0;
 
   this.spriteAtaque2 = new Image();
-  this.spriteAtaque2.src = "../img/Sprites2/Attack_1.png";
+  this.spriteAtaque2.src = "../img/Sprites2/Attack_1.png?v=1";
   this.numSpritesAtaque2 = 6;
   this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
@@ -85,7 +85,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorAtaque2 = 0;
 
   this.spriteMorre = new Image();
-  this.spriteMorre.src = "../img/Sprites2/Dead.png";
+  this.spriteMorre.src = "../img/Sprites2/Dead.png?v=1";
   this.numSpritesMorre = 4;
   this.largSpriteMorre = this.spriteMorre.width / this.numSpritesMorre;
   this.altSpriteMorre = this.spriteMorre.height;
@@ -93,7 +93,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorMorre = 0;
 
   this.spriteDano = new Image();
-  this.spriteDano.src = "../img/Sprites2/Hurt.png";
+  this.spriteDano.src = "../img/Sprites2/Hurt.png?v=1";
   this.numSpritesDano = 2;
   this.largSpriteDano = this.spriteDano.width / this.numSpritesDano;
   this.altSpriteDano = this.spriteDano.height;
@@ -116,6 +116,40 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
 }
 //
 Jogador2.prototype = {
+
+  iniciar: function(){
+    this.preloadSprites();
+  },
+
+
+  preloadSprites: function () {
+    const imagens = [
+      "../img/Sprites2/Idle.png?v=1",
+      "../img/Sprites2/Run.png?v=1",
+      "../img/Sprites2/Jump.png?v=1",
+      "../img/Sprites2/Attack_1.png?v=1",
+      "../img/Sprites2/Attack_2.png?v=1",
+      "../img/Sprites2/Dead.png?v=1",
+      "../img/Sprites2/Hurt.png?v=1",
+    ];
+
+    // Contador para rastrear o número de imagens carregadas
+    let imagensCarregadas = 0;
+
+    // Função para verificar se todas as imagens foram carregadas
+    const verificarCarregamento = () => {
+      imagensCarregadas++;
+      if (imagensCarregadas === imagens.length){
+        
+      }
+    };
+        // Loop para pré-carregar cada imagem
+        imagens.forEach((url) => {
+          const imagem = new Image();
+          imagem.onload = verificarCarregamento;
+          imagem.src = url;
+      });
+  },
 
   verificarSpritesCarregadas: function () {
     this.spritesCarregadas++;

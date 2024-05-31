@@ -13,8 +13,8 @@ function Jogador(
   this.context = context;
   this.teclado = teclado;
   this.animacao = animacao;
-  this.nome = "Jogador 1"
-  this.telaGameOver = telaGameOver
+  this.nome = "Jogador 1";
+  this.telaGameOver = telaGameOver;
   this.sons = sons;
   this.vida = 100;
   this.x = 0;
@@ -45,14 +45,13 @@ function Jogador(
   this.ultimoPulo = 0;
   this.vivo = true;
 
-
   // Constantes do chão com deslocamento vertical
   this.verticalOffset = -120; // Deslocamento para subir o jogador acima do chão
   this.groundHeight = canvasHeight - this.height - this.verticalOffset;
 
   // Código para carregar e configurar sprites
   this.spriteParado = new Image();
-  this.spriteParado.src = "../img/Sprites/Idle.png";
+  this.spriteParado.src = "../img/Sprites/Idle.png?v=1";
   this.numSpritesIdle = 4;
   this.largSpriteIdle = this.spriteParado.width / this.numSpritesIdle;
   this.altSpriteIdle = this.spriteParado.height;
@@ -60,7 +59,7 @@ function Jogador(
   this.contadorIdle = 0;
 
   this.spriteCorrendo = new Image();
-  this.spriteCorrendo.src = "../img/Sprites/Run.png";
+  this.spriteCorrendo.src = "../img/Sprites/Run.png?v=1";
   this.numSpritesCorrendo = 8;
   this.largSpriteCorrendo = this.spriteCorrendo.width / this.numSpritesCorrendo;
   this.altSpriteCorrendo = this.spriteCorrendo.height;
@@ -68,7 +67,7 @@ function Jogador(
   this.contadorCorrendo = 0;
 
   this.spritePulando = new Image();
-  this.spritePulando.src = "../img/Sprites/Jump.png";
+  this.spritePulando.src = "../img/Sprites/Jump.png?v=1";
   this.numSpritesPulando = 2;
   this.largSpritePulando = this.spritePulando.width / this.numSpritesPulando;
   this.altSpritePulando = this.spritePulando.height;
@@ -76,7 +75,7 @@ function Jogador(
   this.contadorPulando = 0;
 
   this.spriteAtaque1 = new Image();
-  this.spriteAtaque1.src = "../img/Sprites/Attack1.png";
+  this.spriteAtaque1.src = "../img/Sprites/Attack1.png?v=1";
   this.numSpritesAtaque1 = 4;
   this.largSpriteAtaque1 = this.spriteAtaque1.width / this.numSpritesAtaque1;
   this.altSpriteAtaque1 = this.spriteAtaque1.height;
@@ -84,7 +83,7 @@ function Jogador(
   this.contadorAtaque1 = 0;
 
   this.spriteAtaque2 = new Image();
-  this.spriteAtaque2.src = "../img/Sprites/Attack2.png";
+  this.spriteAtaque2.src = "../img/Sprites/Attack2.png?v=1";
   this.numSpritesAtaque2 = 4;
   this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
@@ -92,7 +91,7 @@ function Jogador(
   this.contadorAtaque2 = 0;
 
   this.spriteMorre = new Image();
-  this.spriteMorre.src = "../img/Sprites/Death.png";
+  this.spriteMorre.src = "../img/Sprites/Death.png?v=1";
   this.numSpritesMorre = 7;
   this.largSpriteMorre = this.spriteMorre.width / this.numSpritesMorre;
   this.altSpriteMorre = this.spriteMorre.height;
@@ -100,7 +99,7 @@ function Jogador(
   this.contadorMorre = 0;
 
   this.spriteDano = new Image();
-  this.spriteDano.src = "../img/Sprites/Take hit.png";
+  this.spriteDano.src = "../img/Sprites/Take hit.png?v=1";
   this.numSpritesDano = 3;
   this.largSpriteDano = this.spriteDano.width / this.numSpritesDano;
   this.altSpriteDano = this.spriteDano.height;
@@ -108,29 +107,60 @@ function Jogador(
   this.contadorDano = 0;
 
   this.spriteParado.onload = () => this.verificarSpritesCarregadas();
-  this.spriteCorrendo.onload = () => this.verificarSpritesCarregadas(); 
-  this.spritePulando.onload = () => this.verificarSpritesCarregadas(); 
-  this.spriteAtaque1.onload = () => this.verificarSpritesCarregadas(); 
-  this.spriteAtaque2.onload = () => this.verificarSpritesCarregadas(); 
-  this.spriteMorre.onload = () => this.verificarSpritesCarregadas(); 
-  this.spriteDano.onload = () => this.verificarSpritesCarregadas(); 
-
+  this.spriteCorrendo.onload = () => this.verificarSpritesCarregadas();
+  this.spritePulando.onload = () => this.verificarSpritesCarregadas();
+  this.spriteAtaque1.onload = () => this.verificarSpritesCarregadas();
+  this.spriteAtaque2.onload = () => this.verificarSpritesCarregadas();
+  this.spriteMorre.onload = () => this.verificarSpritesCarregadas();
+  this.spriteDano.onload = () => this.verificarSpritesCarregadas();
 
   this.spritesCarregadas = 0;
-  this.totalSprites = 7
-  this.carregado = false
-
+  this.totalSprites = 7;
+  this.carregado = false;
 }
 
 Jogador.prototype = {
 
+  iniciar: function(){
+    this.preloadSprites();
+  },
+
+
+  preloadSprites: function () {
+    const imagens = [
+      "../img/Sprites/Idle.png?v=1",
+      "../img/Sprites/Run.png?v=1",
+      "../img/Sprites/Jump.png?v=1",
+      "../img/Sprites/Attack1.png?v=1",
+      "../img/Sprites/Attack2.png?v=1",
+      "../img/Sprites/Death.png?v=1",
+      "../img/Sprites/Take hit.png?v=1",
+    ];
+
+    // Contador para rastrear o número de imagens carregadas
+    let imagensCarregadas = 0;
+
+    // Função para verificar se todas as imagens foram carregadas
+    const verificarCarregamento = () => {
+      imagensCarregadas++;
+      if (imagensCarregadas === imagens.length){
+        
+      }
+    };
+        // Loop para pré-carregar cada imagem
+        imagens.forEach((url) => {
+          const imagem = new Image();
+          imagem.onload = verificarCarregamento;
+          imagem.src = url;
+      });
+  },
+
   verificarSpritesCarregadas: function () {
     this.spritesCarregadas++;
     if (this.spritesCarregadas === this.totalSprites) {
-        this.carregado = true;
-    }
-    else{
-      this.carregado = false
+      this.carregado = true;
+    } else {
+      this.carregado = false;
     }
   },
 
@@ -159,10 +189,10 @@ Jogador.prototype = {
 
   pular: function () {
     var agora = new Date().getTime();
-    if(agora - this.ultimoPulo > 1000){
-    this.velocidadeY = -12;
-    this.pulando = true;
-    this.ultimoPulo = agora
+    if (agora - this.ultimoPulo > 1000) {
+      this.velocidadeY = -12;
+      this.pulando = true;
+      this.ultimoPulo = agora;
     }
   },
 
@@ -182,15 +212,12 @@ Jogador.prototype = {
     if (this.teclado.pressionada(A) && this.teclado.pressionada(D)) {
       this.bugDireitaEsquerda();
       this.sons.pausarCorrer2();
-
     } else if (this.teclado.pressionada(A) && this.x >= -177) {
       this.moverEsquerda();
       this.sons.reproduzirCorrer2();
-
     } else if (this.teclado.pressionada(D) && this.x <= 582) {
       this.moverDireita();
       this.sons.reproduzirCorrer2();
-
     } else {
       this.isMoving = false;
       this.movingDireita = false;
@@ -199,24 +226,29 @@ Jogador.prototype = {
     }
 
     // Gerenciar ataques e cooldown
-    if ((this.teclado.pressionada(W) || this.pulando) && (this.teclado.pressionada(V) || this.teclado.pressionada(B))) {
+    if (
+      (this.teclado.pressionada(W) || this.pulando) &&
+      (this.teclado.pressionada(V) || this.teclado.pressionada(B))
+    ) {
       this.pulando = true;
       this.atacando1 = false;
       this.atacando2 = false;
-    }
-    else if (this.teclado.pressionada(V) && this.teclado.pressionada(B)) {
-      this.atacando1 = false
-      this.atacando2 = false
-    }
-    else if (this.teclado.pressionada(V) && this.cooldownAtaque1 === 0) {
+    } else if (this.teclado.pressionada(V) && this.teclado.pressionada(B)) {
+      this.atacando1 = false;
+      this.atacando2 = false;
+    } else if (this.teclado.pressionada(V) && this.cooldownAtaque1 === 0) {
       this.iniciarAtaque1();
       this.sons.reproduzirAtaque1();
-
     } else if (this.teclado.pressionada(B) && this.cooldownAtaque2 === 0) {
       this.iniciarAtaque2();
       this.sons.reproduzirAtaque2();
-
-    }if (((this.teclado.pressionada(V) && this.cooldownAtaque1 === 0) || this.teclado.pressionada(B) && this.cooldownAtaque2 === 0) && (this.teclado.pressionada(SETA_DIREITA) || this.teclado.pressionada(SETA_ESQUERDA))) {
+    }
+    if (
+      ((this.teclado.pressionada(V) && this.cooldownAtaque1 === 0) ||
+        (this.teclado.pressionada(B) && this.cooldownAtaque2 === 0)) &&
+      (this.teclado.pressionada(SETA_DIREITA) ||
+        this.teclado.pressionada(SETA_ESQUERDA))
+    ) {
       this.isMoving = true;
       this.iniciarAtaque1();
       this.iniciarAtaque2();
@@ -247,7 +279,7 @@ Jogador.prototype = {
 
     if (this.animandoMorte) {
       if (this.frameMorre === this.numSpritesMorre - 1) {
-        this.animandoMorte = false
+        this.animandoMorte = false;
       }
       return;
     }
@@ -265,7 +297,7 @@ Jogador.prototype = {
   },
 
   iniciarAtaque2: function () {
-    if (!this.atacando1  && !this.pulando) {
+    if (!this.atacando1 && !this.pulando) {
       this.atacando2 = true;
       this.tempoRestanteAtaque2 = this.tempoAtaque2;
       this.cooldownAtaque2 = 3000;
@@ -284,14 +316,12 @@ Jogador.prototype = {
 
     if (this.tempoRestanteAtaque1 > 0) {
       this.tempoRestanteAtaque1--;
-      if (this.tempoRestanteAtaque1 === 0)
-        this.atacando1 = false;
+      if (this.tempoRestanteAtaque1 === 0) this.atacando1 = false;
     }
 
     if (this.tempoRestanteAtaque2 > 0) {
       this.tempoRestanteAtaque2--;
-      if (this.tempoRestanteAtaque2 === 0)
-        this.atacando2 = false;
+      if (this.tempoRestanteAtaque2 === 0) this.atacando2 = false;
     }
   },
 
@@ -318,9 +348,8 @@ Jogador.prototype = {
     }
   },
 
-
-  resetar: function (canvasWidth,canvasHeight) {
-    this.nome = "Jogador 1"
+  resetar: function (canvasWidth, canvasHeight) {
+    this.nome = "Jogador 1";
     this.vida = 100;
     this.x = 0;
     this.y = 0;
@@ -347,7 +376,7 @@ Jogador.prototype = {
     this.tempoRestanteAtaque2 = 0;
     this.dano = 0;
     this.ultimoPulo = 0;
-    this.vivo = true; 
+    this.vivo = true;
   },
 
   desenharJogador: function () {
@@ -419,8 +448,7 @@ Jogador.prototype = {
         this.width,
         this.height
       );
-    }
-    else {
+    } else {
       this.context.drawImage(
         sprite,
         frame * largSprite,
@@ -556,7 +584,7 @@ Jogador.prototype = {
     }
   },
 
-  desenhar: function () { 
+  desenhar: function () {
     this.desenharJogador();
     this.desenharBarraVida();
     this.desenharBarrasCooldown();

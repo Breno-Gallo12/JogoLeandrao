@@ -29,6 +29,8 @@ Jogo.prototype = {
 
     loopJogo: function () {
         if (this.gameState === false && !this.jogador.morto && !this.jogador2.morto){
+            this.jogador.iniciar();
+            this.jogador2.iniciar();
             this.animacao.novoSprite(this.jogador);
             this.animacao.novoSprite(this.jogador2);
             this.animacao.ligar();
