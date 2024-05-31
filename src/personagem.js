@@ -19,8 +19,8 @@ function Jogador(
   this.vida = 100;
   this.x = 0;
   this.y = 0;
-  this.width = 400;
-  this.height = 400;
+  this.width = 155;
+  this.height = 155;
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
   this.direcao = DIRECAO_DIREITA;
@@ -46,13 +46,13 @@ function Jogador(
   this.vivo = true;
 
   // Constantes do chão com deslocamento vertical
-  this.verticalOffset = -120; // Deslocamento para subir o jogador acima do chão
+  this.verticalOffset = 20; // Deslocamento para subir o jogador acima do chão
   this.groundHeight = canvasHeight - this.height - this.verticalOffset;
 
   // Código para carregar e configurar sprites
   this.spriteParado = new Image();
   this.spriteParado.src = "../img/Sprites/Idle.png?v=1";
-  this.numSpritesIdle = 4;
+  this.numSpritesIdle = 7;
   this.largSpriteIdle = this.spriteParado.width / this.numSpritesIdle;
   this.altSpriteIdle = this.spriteParado.height;
   this.frameIdle = 0;
@@ -68,39 +68,39 @@ function Jogador(
 
   this.spritePulando = new Image();
   this.spritePulando.src = "../img/Sprites/Jump.png?v=1";
-  this.numSpritesPulando = 2;
+  this.numSpritesPulando = 9;
   this.largSpritePulando = this.spritePulando.width / this.numSpritesPulando;
   this.altSpritePulando = this.spritePulando.height;
   this.framePulando = 0;
   this.contadorPulando = 0;
 
   this.spriteAtaque1 = new Image();
-  this.spriteAtaque1.src = "../img/Sprites/Attack1.png?v=1";
-  this.numSpritesAtaque1 = 4;
+  this.spriteAtaque1.src = "../img/Sprites/Attack_1.png?v=1";
+  this.numSpritesAtaque1 = 5;
   this.largSpriteAtaque1 = this.spriteAtaque1.width / this.numSpritesAtaque1;
   this.altSpriteAtaque1 = this.spriteAtaque1.height;
   this.frameAtaque1 = 0;
   this.contadorAtaque1 = 0;
 
   this.spriteAtaque2 = new Image();
-  this.spriteAtaque2.src = "../img/Sprites/Attack2.png?v=1";
-  this.numSpritesAtaque2 = 4;
+  this.spriteAtaque2.src = "../img/Sprites/Attack_2.png?v=1";
+  this.numSpritesAtaque2 = 5;
   this.largSpriteAtaque2 = this.spriteAtaque2.width / this.numSpritesAtaque2;
   this.altSpriteAtaque2 = this.spriteAtaque2.height;
   this.frameAtaque2 = 0;
   this.contadorAtaque2 = 0;
 
   this.spriteMorre = new Image();
-  this.spriteMorre.src = "../img/Sprites/Death.png?v=1";
-  this.numSpritesMorre = 7;
+  this.spriteMorre.src = "../img/Sprites/Dead.png?v=1";
+  this.numSpritesMorre = 5;
   this.largSpriteMorre = this.spriteMorre.width / this.numSpritesMorre;
   this.altSpriteMorre = this.spriteMorre.height;
   this.frameMorre = 0;
   this.contadorMorre = 0;
 
   this.spriteDano = new Image();
-  this.spriteDano.src = "../img/Sprites/Take hit.png?v=1";
-  this.numSpritesDano = 3;
+  this.spriteDano.src = "../img/Sprites/Hurt.png?v=1";
+  this.numSpritesDano = 4;
   this.largSpriteDano = this.spriteDano.width / this.numSpritesDano;
   this.altSpriteDano = this.spriteDano.height;
   this.frameDano = 0;
@@ -120,11 +120,9 @@ function Jogador(
 }
 
 Jogador.prototype = {
-
-  iniciar: function(){
+  iniciar: function () {
     this.preloadSprites();
   },
-
 
   preloadSprites: function () {
     const imagens = [
@@ -143,16 +141,15 @@ Jogador.prototype = {
     // Função para verificar se todas as imagens foram carregadas
     const verificarCarregamento = () => {
       imagensCarregadas++;
-      if (imagensCarregadas === imagens.length){
-        
+      if (imagensCarregadas === imagens.length) {
       }
     };
-        // Loop para pré-carregar cada imagem
-        imagens.forEach((url) => {
-          const imagem = new Image();
-          imagem.onload = verificarCarregamento;
-          imagem.src = url;
-      });
+    // Loop para pré-carregar cada imagem
+    imagens.forEach((url) => {
+      const imagem = new Image();
+      imagem.onload = verificarCarregamento;
+      imagem.src = url;
+    });
   },
 
   verificarSpritesCarregadas: function () {
@@ -277,6 +274,7 @@ Jogador.prototype = {
       return;
     }
 
+    //Controle de animção morte
     if (this.animandoMorte) {
       if (this.frameMorre === this.numSpritesMorre - 1) {
         this.animandoMorte = false;
@@ -348,6 +346,8 @@ Jogador.prototype = {
     }
   },
 
+  //Reseta variaveis, para reincialização do jogo
+
   resetar: function (canvasWidth, canvasHeight) {
     this.nome = "Jogador 1";
     this.vida = 100;
@@ -379,9 +379,12 @@ Jogador.prototype = {
     this.vivo = true;
   },
 
+  //Desenha sprite do jogador
+
   desenharJogador: function () {
     let sprite, numSprites, largSprite, altSprite, frame, contador;
 
+    // Seleciona a spritesheet a ser apresentada com base no estado atual do jogador
     if (this.atacando1) {
       sprite = this.spriteAtaque1;
       numSprites = this.numSpritesAtaque1;
@@ -433,8 +436,10 @@ Jogador.prototype = {
       contador = this.contadorIdle;
     }
 
+    // Salva o contexto do canvas para poder restaurá-lo mais tarde
     this.context.save();
 
+    // Desenha o jogador no canvas, invertendo a direção se necessário
     if (this.direcao === DIRECAO_ESQUERDA) {
       this.context.scale(-1, 1);
       this.context.drawImage(
@@ -462,6 +467,7 @@ Jogador.prototype = {
       );
     }
 
+    // Desenha o jogador novamente se ele estiver pulando e atacando ao mesmo tempo
     if (this.pulando && (this.atacando1 || this.atacando2)) {
       this.context.drawImage(
         sprite,
@@ -476,14 +482,17 @@ Jogador.prototype = {
       );
     }
 
+    // Restaura o contexto do canvas ao estado salvo anteriormente
     this.context.restore();
 
+    // Atualiza o contador e o frame para a animação
     contador++;
     if (contador >= 10) {
       frame = (frame + 1) % numSprites;
       contador = 0;
     }
 
+    // Atualiza o frame e o contador de acordo com o estado atual do jogador
     if (this.pulando) {
       this.framePulando = frame;
       this.contadorPulando = contador;
@@ -583,6 +592,8 @@ Jogador.prototype = {
       );
     }
   },
+
+  //Chama todas a funções de desenho relacionada ao personagem
 
   desenhar: function () {
     this.desenharJogador();

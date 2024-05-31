@@ -7,6 +7,8 @@ function TelaGameOver(context, canvasWidth, canvasHeight) {
 
 TelaGameOver.prototype = {
 
+
+    //Desenha a tela Gameover
     desenhar: function (vencedor) {
             this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
             this.context.font = '36px Arial';

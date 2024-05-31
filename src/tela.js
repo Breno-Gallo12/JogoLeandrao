@@ -6,6 +6,9 @@ function TelaInicio(context, canvasWidth, canvasHeight) {
 }
 
     TelaInicio.prototype = {
+
+        //Desenha a tela inical do jogo
+
         desenhar: function () {
             this.context.fillStyle = "black";
             this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
