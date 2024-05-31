@@ -1,11 +1,13 @@
 function Som(){
     this.musicaFundo = new Audio("../sons/musicaFundo.mp3");
     this.correndo = new Audio("../sons/correndo.mp3");
+    this.correndo2 = new Audio("../sons/correndo2.mp3");
     this.ataque1 = new Audio("../sons/ataque1.mp3");
     this.ataque2 = new Audio("../sons/ataque2.mp3");
     this.morte = new Audio("../sons/morte.mp3");
     this.dano = new Audio("../sons/dano.mp3");
-    this.pulo = new Audio("../sons/pulo.mp3");
+    this.pulo = new Audio("../sons/pulando2.mp3");
+    this.pulo1 = new Audio("../sons/pulo.mp3");
 }
 
 Som.prototype = {
@@ -25,9 +27,20 @@ Som.prototype = {
         this.correndo.play();
     },
 
+    reproduzirCorrer2: function() {
+        this.correndo2.loop = true
+        this.correndo2.volume = 1
+        this.correndo2.play();
+    },
+
     pausarCorrer: function() {
         this.correndo.pause();
     },
+
+    pausarCorrer2: function() {
+        this.correndo2.pause();
+    },
+
 
     reproduzirAtaque1: function() {
         this.ataque1.volume = 0.3
@@ -52,6 +65,11 @@ Som.prototype = {
     reproduzirPulo: function() {
         this.pulo.volume = 0.1
         this.pulo.play();
+    },
+
+    reproduzirPulo1: function() {
+        this.pulo1.volume = 0.1
+        this.pulo1.play();
     },
 
 

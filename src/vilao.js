@@ -10,13 +10,13 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.nome = "Jogador 2"
   this.sons = sons;
   this.vida = 100;
-  this.x = 500;
+  this.x = 550  ;
   this.y = 0;
   this.width = 155;
   this.height = 155;
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
-  this.direcao = DIRECAO_DIREITA;
+  this.direcao = DIRECAO_ESQUERDA;
   this.velocidadeY = 0;
   this.pulando = false;
   this.corVida = "green";
@@ -175,7 +175,7 @@ Jogador2.prototype = {
       this.bugDireitaEsquerda();
       this.sons.pausarCorrer();
 
-    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -120) {
+    } else if (this.teclado.pressionada(SETA_ESQUERDA) && this.x >= -75) {
       this.moverEsquerda();
       this.sons.reproduzirCorrer();
 
@@ -220,7 +220,7 @@ Jogador2.prototype = {
 
     // Pulo
     if (this.teclado.pressionada(SETA_CIMA) && !this.pulando) {
-      this.sons.reproduzirPulo();
+      this.sons.reproduzirPulo1();
       this.pular();
     }
 
@@ -252,7 +252,7 @@ Jogador2.prototype = {
       this.atacando1 = true;
       this.tempoRestanteAtaque1 = this.tempoAtaque1;
       this.cooldownAtaque1 = 350;
-      this.dano = 20;
+      this.dano = 5;
       this.isMoving = false;
     }
   },
@@ -262,7 +262,7 @@ Jogador2.prototype = {
       this.atacando2 = true;
       this.tempoRestanteAtaque2 = this.tempoAtaque2;
       this.cooldownAtaque2 = 3000;
-      this.dano = 40;
+      this.dano = 10;
       this.isMoving = false;
     }
   },
@@ -296,7 +296,6 @@ Jogador2.prototype = {
     this.frameMorre = 0;
     this.contadorMorre = 0;
     this.sons.reproduzirMorte();
-    this.telaGameOver.mostrarGameOver();
   },
 
   //Função para receber dano
@@ -319,8 +318,8 @@ Jogador2.prototype = {
     this.vida = 100;
     this.x = 500;
     this.y = 0;
-    this.width = 195;
-    this.height = 195;
+    this.width = 155;
+    this.height = 155;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.velocidadeY = 0;
@@ -366,6 +365,7 @@ Jogador2.prototype = {
       sprite = this.spriteDano;
       numSprites = this.numSpritesDano;
       largSprite = this.largSpriteDano;
+      
       altSprite = this.altSpriteDano;
       frame = this.frameDano;
       contador = this.contadorDano;
@@ -400,7 +400,6 @@ Jogador2.prototype = {
     }
 
     this.context.save();
-
     if (this.direcao === DIRECAO_ESQUERDA) {
       this.context.scale(-1, 1);
       this.context.drawImage(
@@ -409,7 +408,7 @@ Jogador2.prototype = {
         0,
         largSprite,
         altSprite,
-        -this.x - this.width,
+        -this.x - this.width, 
         this.y,
         this.width,
         this.height
@@ -446,7 +445,7 @@ Jogador2.prototype = {
     this.context.restore();
 
     contador++;
-    if (contador >= 7) {
+    if (contador >= 15) {
       frame = (frame + 1) % numSprites;
       contador = 0;
     }

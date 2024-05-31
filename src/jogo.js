@@ -43,15 +43,13 @@ Jogo.prototype = {
             this.animacao.novoSprite(this.jogador2);
             this.animacao.ligar();
         }
-        else {
-            this.telaInicio.desenhar();
-        }
     },
 
-    mostrarGameOver: function (vencedor, perdedor) {
+    mostrarGameOver: function (perdedor, vencedor) {
         var espacoPressionado = false;
 
-        this.telaGameOver.desenhar(vencedor,perdedor);
+        this.telaGameOver.desenhar(vencedor);
+        this.animacao.desligar();
         
         document.addEventListener("keydown", function (event) {
             if (event.keyCode === 32 && !espacoPressionado) {
@@ -61,7 +59,8 @@ Jogo.prototype = {
         }.bind(this));
     },
 
-    reiniciarJogo: function () {
+
+    reiniciarJogo: function(){
         this.animacao.reiniciar();
-    }
+    },
 }

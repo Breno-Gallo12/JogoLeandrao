@@ -174,21 +174,21 @@ Jogador.prototype = {
     // Movimento horizontal, ESQUERDA E DIREITA
     if (this.teclado.pressionada(A) && this.teclado.pressionada(D)) {
       this.bugDireitaEsquerda();
-      this.sons.pausarCorrer();
+      this.sons.pausarCorrer2();
 
     } else if (this.teclado.pressionada(A) && this.x >= -177) {
       this.moverEsquerda();
-      this.sons.reproduzirCorrer();
+      this.sons.reproduzirCorrer2();
 
     } else if (this.teclado.pressionada(D) && this.x <= 582) {
       this.moverDireita();
-      this.sons.reproduzirCorrer();
+      this.sons.reproduzirCorrer2();
 
     } else {
       this.isMoving = false;
       this.movingDireita = false;
       this.movingEsquerda = false;
-      this.sons.pausarCorrer();
+      this.sons.pausarCorrer2();
     }
 
     // Gerenciar ataques e cooldown
@@ -252,7 +252,7 @@ Jogador.prototype = {
       this.atacando1 = true;
       this.tempoRestanteAtaque1 = this.tempoAtaque1;
       this.cooldownAtaque1 = 350;
-      this.dano = 20;
+      this.dano = 5;
       this.isMoving = false;
     }
   },
@@ -262,7 +262,7 @@ Jogador.prototype = {
       this.atacando2 = true;
       this.tempoRestanteAtaque2 = this.tempoAtaque2;
       this.cooldownAtaque2 = 3000;
-      this.dano = 40;
+      this.dano = 10;
       this.isMoving = false;
     }
   },
@@ -296,7 +296,6 @@ Jogador.prototype = {
     this.frameMorre = 0;
     this.contadorMorre = 0;
     this.sons.reproduzirMorte();
-    this.telaGameOver.mostrarGameOver();
   },
 
   //Função para receber dano
