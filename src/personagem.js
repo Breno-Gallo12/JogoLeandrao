@@ -1,8 +1,15 @@
 var DIRECAO_ESQUERDA = 1;
 var DIRECAO_DIREITA = 2;
 
-
-function Jogador(context, teclado, animacao, sons, canvasWidth, canvasHeight, telaGameOver) {
+function Jogador(
+  context,
+  teclado,
+  animacao,
+  sons,
+  canvasWidth,
+  canvasHeight,
+  telaGameOver
+) {
   this.context = context;
   this.teclado = teclado;
   this.animacao = animacao;

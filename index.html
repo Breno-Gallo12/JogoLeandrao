@@ -27,6 +27,17 @@
 
 
     <script>
+        var primeiraVez = sessionStorage.getItem('primeiraVez');
+
+        // Bug da sprite não carregar na primeira execução
+        if (!primeiraVez) {
+            sessionStorage.setItem('primeiraVez', 'false');
+            setTimeout(function () {
+                location.reload();
+            }, 100);
+        }
+
+
         // Obtém o contexto do canvas
         var canvas = document.getElementById('meuCanvas');
         var jogo = new Jogo(canvas)

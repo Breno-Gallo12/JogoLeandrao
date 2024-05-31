@@ -14,16 +14,6 @@ function Jogo(canvas) {
 
 Jogo.prototype = {
     inicio: function () {
-        var primeiraVez = sessionStorage.getItem('primeiraVez');
-
-        // Bug da sprite não carregar na primeira execução
-        if (!primeiraVez) {
-            sessionStorage.setItem('primeiraVez', 'false');
-            setTimeout(function () {
-                location.reload();
-            }, 100);
-        }
-
         this.telaInicio.desenhar();
 
         var enterPressionado = false;

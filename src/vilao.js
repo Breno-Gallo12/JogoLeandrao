@@ -45,7 +45,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
 
   // Código para carregar e configurar sprites
   this.spriteParado = new Image();
-  this.spriteParado.src = "../img/Sprites2/Idle.png";
+  this.spriteParado.src = "../img/Sprites2/Idle.png?v=1";
   this.numSpritesIdle = 6;
   this.largSpriteIdle = this.spriteParado.width / this.numSpritesIdle;
   this.altSpriteIdle = this.spriteParado.height;
@@ -53,7 +53,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorIdle = 0;
 
   this.spriteCorrendo = new Image();
-  this.spriteCorrendo.src = "../img/Sprites2/Run.png";
+  this.spriteCorrendo.src = "../img/Sprites2/Run.png?v=1";
   this.numSpritesCorrendo = 6;
   this.largSpriteCorrendo = this.spriteCorrendo.width / this.numSpritesCorrendo;
   this.altSpriteCorrendo = this.spriteCorrendo.height;
@@ -61,7 +61,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.contadorCorrendo = 0;
 
   this.spritePulando = new Image();
-  this.spritePulando.src = "../img/Sprites2/Jump.png";
+  this.spritePulando.src = "../img/Sprites2/Jump.png?v=1";
   this.numSpritesPulando = 8;
   this.largSpritePulando = this.spritePulando.width / this.numSpritesPulando;
   this.altSpritePulando = this.spritePulando.height;
