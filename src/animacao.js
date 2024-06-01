@@ -75,8 +75,10 @@ Animacao.prototype.desligar = function () {
 Animacao.prototype.verificarEstadoJogadores = function () {
     if (!this.jogador.vivo) {
         this.animacaoMorte(this.jogador, this.jogador2);
+        this.jogador2.venceu = true;
     } else if (!this.jogador2.vivo) {
         this.animacaoMorte(this.jogador2, this.jogador);
+        this.jogador.venceu = true;
     }
 };
 

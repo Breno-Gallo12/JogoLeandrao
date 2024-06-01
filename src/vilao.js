@@ -37,6 +37,7 @@ function Jogador2(context, teclado, animacao, sons, canvasWidth, canvasHeight, t
   this.dano = 0;
   this.ultimoPulo = 0;
   this.vivo = true;
+  this.venceu = false;
 
 
   // Constantes do chão com deslocamento vertical

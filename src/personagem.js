@@ -17,7 +17,7 @@ function Jogador(
   this.telaGameOver = telaGameOver;
   this.sons = sons;
   this.vida = 100;
-  this.x = 0;
+  this.x = 100;
   this.y = 0;
   this.width = 155;
   this.height = 155;
@@ -44,6 +44,7 @@ function Jogador(
   this.dano = 0;
   this.ultimoPulo = 0;
   this.vivo = true;
+  this.venceu = false;
 
   // Constantes do chão com deslocamento vertical
   this.verticalOffset = 20; // Deslocamento para subir o jogador acima do chão
@@ -129,10 +130,10 @@ Jogador.prototype = {
       "../img/Sprites/Idle.png?v=1",
       "../img/Sprites/Run.png?v=1",
       "../img/Sprites/Jump.png?v=1",
-      "../img/Sprites/Attack1.png?v=1",
-      "../img/Sprites/Attack2.png?v=1",
-      "../img/Sprites/Death.png?v=1",
-      "../img/Sprites/Take hit.png?v=1",
+      "../img/Sprites/Attack_1.png?v=1",
+      "../img/Sprites/Attack_2.png?v=1",
+      "../img/Sprites/Dead.png?v=1",
+      "../img/Sprites/Hurt.png?v=1",
     ];
 
     // Contador para rastrear o número de imagens carregadas
