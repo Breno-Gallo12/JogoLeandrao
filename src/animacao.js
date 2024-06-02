@@ -69,18 +69,10 @@ Animacao.prototype.animacaoMorte = function (jogadorMorto, outroJogador) {
 
     jogadorMorto.animandoMorte = true;
 
-    setTimeout(function() {
-        animacao.jogo.mostrarGameOver(jogadorMorto,outroJogador);
-        animacao.sons.pausarMusicaFundo();
-        animacao.sons.reproduzirGameOver();
-
-    }, 2500); // Tempo de espera de 1 segundo (1000 milissegundos)
-
-
     setTimeout(function () {
-        animacao.sons.pausarMusicaFundo();
-
-        // Exibir a tela de game over
+        // Pausa a música de fundo
+        animacao.sons.pausarTudo();
+        // Exibe a tela de game over
         animacao.jogo.mostrarGameOver(jogadorMorto, outroJogador);
     }, 800);
 }
@@ -95,14 +87,19 @@ Animacao.prototype.verificarColisao = function(jogador1, jogador2) {
         jogador1.y + jogador1.height-160 > jogador2.y) {
         colisao = true;
 
-        // Verifica se o jogador 1 está atacando
-        if (jogador1.atacando1 || jogador1.atacando2) {
+        // Verifica se o jogador 1 está atacando e está de frente para o jogador 2
+        if ((jogador1.atacando1 || jogador1.atacando2) &&
+            ((jogador1.direcao === DIRECAO_DIREITA && jogador1.x < jogador2.x) ||
+             (jogador1.direcao === DIRECAO_ESQUERDA && jogador1.x > jogador2.x))) {
             // Aplica dano ao jogador 2
             jogador2.tomaDano(jogador1.dano);
         }
 
-        if (jogador2.atacando1 || jogador2.atacando2) {
-            // Aplica dano ao jogador 2
+        // Verifica se o jogador 2 está atacando e está de frente para o jogador 1
+        if ((jogador2.atacando1 || jogador2.atacando2) &&
+            ((jogador2.direcao === DIRECAO_DIREITA && jogador2.x < jogador1.x) ||
+             (jogador2.direcao === DIRECAO_ESQUERDA && jogador2.x > jogador1.x))) {
+            // Aplica dano ao jogador 1
             jogador1.tomaDano(jogador2.dano);
         }
     }

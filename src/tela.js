@@ -5,13 +5,9 @@ function TelaInicio(context, canvasWidth, canvasHeight) {
 
 }
 
-    TelaInicio.prototype = {
-        desenhar: function () {
-            this.context.fillStyle = "black";
-            this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-            this.context.fillStyle = "white";
-            this.context.font = "30px Arial";
-            this.context.fillText("Pressione ENTER para começar", 180, 250);
-        },
-
+TelaInicio.prototype = {
+    desenhar: function() {
+        var ctx = this.context;
+        ctx.drawImage(this.image, 0, 0, this.canvasWidth, this.canvasHeight);
     }
+};
