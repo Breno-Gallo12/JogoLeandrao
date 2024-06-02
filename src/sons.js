@@ -1,6 +1,6 @@
 function Som(){
     // Inicializa os objetos de áudio com os arquivos de som correspondentes
-    this.musicaFundo = new Audio("../sons/musicaFundo.mp3");
+    this.musicaFundo = new Audio("../sons/musicaFundo2.mp3");
     this.correndo = new Audio("../sons/correndo.mp3");
     this.correndo2 = new Audio("../sons/correndo2.mp3");
     this.ataque1 = new Audio("../sons/ataque1.mp3");
@@ -9,13 +9,16 @@ function Som(){
     this.dano = new Audio("../sons/dano.mp3");
     this.pulo = new Audio("../sons/pulando2.mp3");
     this.pulo1 = new Audio("../sons/pulo.mp3");
+    this.ataque3 = new Audio("../sons/ataque3.mp3");
+    this.ataque4 = new Audio("../sons/ataque4.mp3");
+    
 }
 
 Som.prototype = {
     // Reproduz a música de fundo em loop com volume reduzido
     reproduzirMusicaFundo: function() {
         this.musicaFundo.loop = true;
-        this.musicaFundo.volume = 0.05; 
+        this.musicaFundo.volume = 0.2; 
         this.musicaFundo.play();
     },
     
@@ -82,5 +85,15 @@ Som.prototype = {
     reproduzirPulo1: function() {
         this.pulo1.volume = 0.1;
         this.pulo1.play();
+    },
+
+    reproduzirAtaque3: function() {
+        this.ataque3.volume = 0.6
+        this.ataque3.play();
+    },
+
+    reproduzirAtaque4: function() {
+        this.ataque4.volume = 0.6;
+        this.ataque4.play();
     },
 }

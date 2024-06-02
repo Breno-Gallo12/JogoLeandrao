@@ -238,11 +238,11 @@ Jogador2.prototype = {
     }
     else if (this.teclado.pressionada(n2) && this.cooldownAtaque1 === 0) {
       this.iniciarAtaque1();
-      this.sons.reproduzirAtaque1();
+      this.sons.reproduzirAtaque3();
 
     } else if (this.teclado.pressionada(n3) && this.cooldownAtaque2 === 0) {
       this.iniciarAtaque2();
-      this.sons.reproduzirAtaque2();
+      this.sons.reproduzirAtaque4();
 
     }if (((this.teclado.pressionada(n2) && this.cooldownAtaque1 === 0) || this.teclado.pressionada(n3) && this.cooldownAtaque2 === 0) && (this.teclado.pressionada(SETA_DIREITA) || this.teclado.pressionada(SETA_ESQUERDA))) {
       this.isMoving = true;
