@@ -91,8 +91,7 @@ Animacao.prototype.animacaoMorte = function (jogadorMorto, outroJogador) {
 
     setTimeout(function () {
         // Pausa a música de fundo
-        animacao.sons.pausarMusicaFundo();
-
+        animacao.sons.pausarTudo();
         // Exibe a tela de game over
         animacao.jogo.mostrarGameOver(jogadorMorto, outroJogador);
     }, 800);

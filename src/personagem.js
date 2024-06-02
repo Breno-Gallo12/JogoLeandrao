@@ -216,12 +216,6 @@ Jogador.prototype = {
     } else if (this.teclado.pressionada(D) && this.x <= 710) {
       this.moverDireita();
       this.sons.reproduzirCorrer2();
-        this.sons.reproduzirCorrert();
-
-    } else if (this.teclado.pressionada(D) && this.x <= 582) {
-      this.moverDireita();
-      this.sons.reproduzirCorrert();
-
     } else {
       this.isMoving = false;
       this.movingDireita = false;
