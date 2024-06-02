@@ -5,13 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/background/icon.ico" type="image/x-icon" />
     <title>Meu Jogo</title>
 </head>
 
 <body>
     <div class="container">
-        <h1>Meu Jogo</h1>
+        <!-- <h1>Meu Jogo</h1> -->
         <canvas id="meuCanvas" width="800" height="500"></canvas>
+    </div>
+
+    <div class="info-icon" id="infoIcon">i</div>
+
+    <div class="info-popup" id="infoPopup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h2>Desenvolvedores</h2>
+            <ul>
+                <li>Breno Gallo del Turco</li>
+                <li>Cauã Vaz da Silva</li>
+                <li>João Henrique Marques Gabriel</li>
+            </ul>
+        </div>
     </div>
 
     <script src="./src/background.js"></script>
@@ -24,13 +39,39 @@
     <script src="./src/jogo.js"></script>
     <script src="./src/vilao.js"></script>
 
-
-
     <script>
+        var primeiraVez = sessionStorage.getItem('primeiraVez');
+
+        // Bug da sprite não carregar na primeira execução
+        if (!primeiraVez) {
+            sessionStorage.setItem('primeiraVez', 'false');
+            setTimeout(function () {
+                location.reload();
+            }, 100);
+        }
+
         // Obtém o contexto do canvas
         var canvas = document.getElementById('meuCanvas');
         var jogo = new Jogo(canvas)
         jogo.inicio()
+
+        var infoIcon = document.getElementById('infoIcon');
+        var infoPopup = document.getElementById('infoPopup');
+        var closePopup = document.getElementById('closePopup');
+
+        infoIcon.onclick = function() {
+            infoPopup.style.display = 'block';
+        }
+
+        closePopup.onclick = function() {
+            infoPopup.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == infoPopup) {
+                infoPopup.style.display = 'none';
+            }
+        }
     </script>
 
 </body>
