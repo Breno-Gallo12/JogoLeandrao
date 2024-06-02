@@ -2,16 +2,21 @@ function TelaInicio(context, canvasWidth, canvasHeight) {
     this.context = context;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
+    this.image = new Image();
+    this.image.src = "../img/background/TelaInicial.png";
 
+    // Usando uma referência a 'this' para acessar a instância atual dentro da função de retorno do evento onload
+    var self = this;
+    this.image.onload = function() {
+        // Após o carregamento da imagem, chama o método desenhar
+        self.desenhar();
+    };
 }
 
-    TelaInicio.prototype = {
-        desenhar: function () {
-            this.context.fillStyle = "black";
-            this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-            this.context.fillStyle = "white";
-            this.context.font = "30px Arial";
-            this.context.fillText("Pressione ENTER para começar", 180, 250);
-        },
-
+TelaInicio.prototype = {
+    desenhar: function() {
+        var ctx = this.context;
+        ctx.drawImage(this.image, 0, 0, this.canvasWidth, this.canvasHeight);
+        console.log("Imagem desenhada no canvas.");
     }
+};
