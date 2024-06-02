@@ -106,7 +106,6 @@ Animacao.prototype.animacaoMorte = function (jogadorMorto, outroJogador) {
     }, 800);
 }
 
-// Verifica a colisão entre os jogadores
 Animacao.prototype.verificarColisao = function(jogador1, jogador2) {
     var colisao = false;
 
@@ -117,14 +116,18 @@ Animacao.prototype.verificarColisao = function(jogador1, jogador2) {
         jogador1.y + jogador1.height > jogador2.y) {
         colisao = true;
 
-        // Verifica se o jogador 1 está atacando
-        if (jogador1.atacando1 || jogador1.atacando2) {
+        // Verifica se o jogador 1 está atacando e está de frente para o jogador 2
+        if ((jogador1.atacando1 || jogador1.atacando2) &&
+            ((jogador1.direcao === DIRECAO_DIREITA && jogador1.x < jogador2.x) ||
+             (jogador1.direcao === DIRECAO_ESQUERDA && jogador1.x > jogador2.x))) {
             // Aplica dano ao jogador 2
             jogador2.tomaDano(jogador1.dano);
         }
 
-        // Verifica se o jogador 2 está atacando
-        if (jogador2.atacando1 || jogador2.atacando2) {
+        // Verifica se o jogador 2 está atacando e está de frente para o jogador 1
+        if ((jogador2.atacando1 || jogador2.atacando2) &&
+            ((jogador2.direcao === DIRECAO_DIREITA && jogador2.x < jogador1.x) ||
+             (jogador2.direcao === DIRECAO_ESQUERDA && jogador2.x > jogador1.x))) {
             // Aplica dano ao jogador 1
             jogador1.tomaDano(jogador2.dano);
         }
