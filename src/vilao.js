@@ -271,6 +271,7 @@ Jogador2.prototype = {
     // Checar vida
     if (this.vida <= 0 && !this.morto) {
       this.vivo = false
+      this.vida = 0;    
       return;
     }
 

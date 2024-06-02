@@ -16,6 +16,13 @@ function Som(){
 }
 
 Som.prototype = {
+    pausarTudo : function(){    
+        this.musicaFundo.pause();
+        this.correndo.pause();
+        this.correndo2.pause();
+    },
+
+
     // Reproduz a música de fundo em loop com volume reduzido
     reproduzirMusicaFundo: function() {
         this.musicaFundo.loop = true;
@@ -40,12 +47,6 @@ Som.prototype = {
         this.correndo2.loop = true;
         this.correndo2.volume = 0.6;
         this.correndo2.play();
-    },
-
-    reproduzirCorrert: function() {
-        this.correndot.loop = true
-        this.correndot.volume = 1
-        this.correndot.play();
     },
 
     // Pausa o som de corrida

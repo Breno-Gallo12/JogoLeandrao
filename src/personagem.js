@@ -216,12 +216,6 @@ Jogador.prototype = {
     } else if (this.teclado.pressionada(D) && this.x <= 710) {
       this.moverDireita();
       this.sons.reproduzirCorrer2();
-        this.sons.reproduzirCorrert();
-
-    } else if (this.teclado.pressionada(D) && this.x <= 582) {
-      this.moverDireita();
-      this.sons.reproduzirCorrert();
-
     } else {
       this.isMoving = false;
       this.movingDireita = false;
@@ -278,6 +272,7 @@ Jogador.prototype = {
     // Checar vida
     if (this.vida <= 0) {
       this.vivo = false;
+      this.vida = 0;
       return;
     }
 
@@ -358,7 +353,7 @@ Jogador.prototype = {
   resetar: function (canvasWidth, canvasHeight) {
     this.nome = "Jogador 1";
     this.vida = 100;
-    this.x = 0;
+    this.x = 100;
     this.y = 0;
     this.width = 155;
     this.height = 155;
